@@ -1,1 +1,7 @@
-# gm
+<html>
+<body>
+  <a href="izm.exe" download>
+    <button>Скачать игру</button>
+  </a>
+</body>
+</html>
