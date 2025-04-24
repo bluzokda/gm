@@ -1,7 +1,413 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовая грамотность: проценты и вклады</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #e8f4f8;
+            --dark: #0a1128;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .game-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .option {
+            padding: 1rem;
+            background: var(--light);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background: #d4e9f5;
+        }
+        
+        .option.correct {
+            background: #c8e6c9;
+            border-color: #81c784;
+        }
+        
+        .option.incorrect {
+            background: #ffcdd2;
+            border-color: #e57373;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .calculator input, .calculator select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e8f5e9;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        .progress-bar {
+            height: 24px;
+            background-color: var(--accent);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .options, .calculator {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 <body>
-  <a href="izm.exe" download>
-    <button>Скачать игру</button>
-  </a>
+    <header>
+        <div class="container">
+            <h1>Финансовая грамотность</h1>
+            <p>Изучаем проценты, вклады и готовимся к ЕГЭ</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="game-section">
+            <h2>Тренажёр по процентам</h2>
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab('simple')">Простые проценты</button>
+                <button class="tab-btn" onclick="openTab('complex')">Сложные проценты</button>
+                <button class="tab-btn" onclick="openTab('deposit')">Вклады и депозиты</button>
+                <button class="tab-btn" onclick="openTab('ege')">Задачи ЕГЭ</button>
+            </div>
+            
+            <div id="simple" class="tab-content active">
+                <div class="question">
+                    <h3>Задача 1</h3>
+                    <p>Вкладчик положил в банк 10 000 рублей под 5% годовых. Какая сумма будет на счету через 2 года при начислении простых процентов?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, 'b')">10 500 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">11 000 руб.</div>
+                        <div class="option correct" onclick="checkAnswer(this, 'a')">11 500 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">12 000 руб.</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h3>Задача 2</h3>
+                    <p>Сумма кредита составляет 50 000 рублей под 12% годовых. Какой будет сумма процентов за 3 года при простом проценте?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, 'b')">6 000 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">12 000 руб.</div>
+                        <div class="option correct" onclick="checkAnswer(this, 'a')">18 000 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">24 000 руб.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="complex" class="tab-content">
+                <div class="question">
+                    <h3>Задача 1</h3>
+                    <p>Клиент положил в банк 20 000 рублей под 7% годовых с капитализацией процентов. Какая сумма будет на счету через 3 года?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, 'b')">22 400 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">23 800 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">24 500 руб.</div>
+                        <div class="option correct" onclick="checkAnswer(this, 'a')">24 500.86 руб.</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h3>Задача 2</h3>
+                    <p>Какой вклад выгоднее: 100 000 руб. под 6% с ежегодной капитализацией или под 6.5% с простыми процентами на 5 лет?</p>
+                    <div class="options">
+                        <div class="option correct" onclick="checkAnswer(this, 'a')">С капитализацией</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">С простыми процентами</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">Одинаково</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">Зависит от инфляции</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="deposit" class="tab-content">
+                <div class="question">
+                    <h3>Калькулятор вкладов</h3>
+                    <div class="calculator">
+                        <div>
+                            <label for="amount">Сумма вклада:</label>
+                            <input type="number" id="amount" placeholder="10000">
+                        </div>
+                        <div>
+                            <label for="rate">Процентная ставка:</label>
+                            <input type="number" id="rate" placeholder="5">
+                        </div>
+                        <div>
+                            <label for="period">Срок (лет):</label>
+                            <input type="number" id="period" placeholder="1">
+                        </div>
+                        <div>
+                            <label for="type">Тип процентов:</label>
+                            <select id="type">
+                                <option value="simple">Простые</option>
+                                <option value="complex">Сложные (с капитализацией)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="calculateDeposit()">Рассчитать</button>
+                    <div class="result" id="deposit-result"></div>
+                </div>
+            </div>
+            
+            <div id="ege" class="tab-content">
+                <div class="question">
+                    <h3>Задача из ЕГЭ</h3>
+                    <p>31 декабря 2019 года Дмитрий взял в банке 4 595 000 рублей в кредит под 20% годовых. Какую сумму Дмитрий должен вернуть банку 31 декабря 2020 года?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, 'b')">4 595 000 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">4 914 000 руб.</div>
+                        <div class="option correct" onclick="checkAnswer(this, 'a')">5 514 000 руб.</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">5 595 000 руб.</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h3>Задача из ЕГЭ</h3>
+                    <p>В банк помещён вклад 64 000 рублей под 25% годовых. Сколько лет потребуется для увеличения вклада более чем в 4 раза при сложных процентах?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, 'b')">4 года</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">5 лет</div>
+                        <div class="option" onclick="checkAnswer(this, 'b')">6 лет</div>
+                        <div class="option correct" onclick="checkAnswer(this, 'a')">7 лет</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress">0%</div>
+            </div>
+        </div>
+        
+        <div class="game-section">
+            <h2>Теория</h2>
+            <h3>Простые проценты</h3>
+            <p>Формула: S = P × (1 + r × t)</p>
+            <p>Где: S - итоговая сумма, P - начальная сумма, r - процентная ставка (в десятичной форме), t - время в годах.</p>
+            
+            <h3>Сложные проценты</h3>
+            <p>Формула: S = P × (1 + r)<sup>t</sup></p>
+            <p>При капитализации проценты начисляются на проценты, поэтому сумма растёт быстрее.</p>
+            
+            <h3>Советы для ЕГЭ</h3>
+            <ul>
+                <li>Внимательно читайте условие - определяйте тип процентов</li>
+                <li>Переводите проценты в десятичную форму (5% = 0.05)</li>
+                <li>Проверяйте размерность (месяцы/годы)</li>
+                <li>Для сложных процентов используйте степень</li>
+            </ul>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Финансовая грамотность. Подготовка к ЕГЭ.</p>
+            <p>Все задачи составлены на основе реальных примеров из банка заданий ФИПИ.</p>
+        </div>
+    </footer>
+    
+    <script>
+        let score = 0;
+        const totalQuestions = 6;
+        
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        function checkAnswer(option, correct) {
+            const options = option.parentElement.children;
+            for (let i = 0; i < options.length; i++) {
+                options[i].classList.remove('correct', 'incorrect');
+                options[i].onclick = null;
+            }
+            
+            if (option.classList.contains('correct')) {
+                option.classList.add('correct');
+                score++;
+            } else {
+                option.classList.add('incorrect');
+                // Находим правильный ответ и подсвечиваем его
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].classList.contains('correct')) {
+                        options[i].classList.add('correct');
+                    }
+                }
+            }
+            
+            updateProgress();
+        }
+        
+        function calculateDeposit() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const rate = parseFloat(document.getElementById('rate').value) / 100;
+            const period = parseFloat(document.getElementById('period').value);
+            const type = document.getElementById('type').value;
+            
+            let result;
+            if (type === 'simple') {
+                result = amount * (1 + rate * period);
+            } else {
+                result = amount * Math.pow(1 + rate, period);
+            }
+            
+            document.getElementById('deposit-result').innerHTML = 
+                `Итоговая сумма: ${result.toFixed(2)} руб.`;
+        }
+        
+        function updateProgress() {
+            const progress = Math.round((score / totalQuestions) * 100);
+            const progressBar = document.getElementById('progress');
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+        }
+    </script>
 </body>
 </html>
