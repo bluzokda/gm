@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Финансовая грамотность: проценты и вклады</title>
+    <title>Финансовый тренажёр: проценты и кредиты</title>
     <style>
         :root {
-            --primary: #4a6fa5;
-            --secondary: #166088;
-            --accent: #4fc3f7;
-            --light: #e8f4f8;
-            --dark: #0a1128;
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
         }
         
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
         }
         
         body {
@@ -64,6 +66,7 @@
             display: flex;
             margin-bottom: 1rem;
             border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
         }
         
         .tab-btn {
@@ -73,10 +76,12 @@
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.3s;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         
         .tab-btn.active {
-            background: var(--accent);
+            background: var(--secondary);
             color: white;
             border-radius: 4px 4px 0 0;
         }
@@ -91,40 +96,26 @@
         
         .question {
             margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 4px;
         }
         
-        .options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+        .answer-form {
             margin-top: 1rem;
         }
         
-        .option {
-            padding: 1rem;
-            background: var(--light);
+        input[type="text"], input[type="number"] {
+            padding: 0.75rem;
             border: 1px solid #ddd;
             border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .option:hover {
-            background: #d4e9f5;
-        }
-        
-        .option.correct {
-            background: #c8e6c9;
-            border-color: #81c784;
-        }
-        
-        .option.incorrect {
-            background: #ffcdd2;
-            border-color: #e57373;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
         }
         
         button {
-            background-color: var(--primary);
+            background-color: var(--secondary);
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -132,31 +123,28 @@
             cursor: pointer;
             font-size: 1rem;
             transition: background-color 0.3s;
+            margin-top: 0.5rem;
         }
         
         button:hover {
-            background-color: var(--secondary);
-        }
-        
-        .calculator {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-        
-        .calculator input, .calculator select {
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
+            background-color: var(--primary);
         }
         
         .result {
             margin-top: 1rem;
             padding: 1rem;
-            background: #e8f5e9;
             border-radius: 4px;
             font-weight: bold;
+        }
+        
+        .correct {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .incorrect {
+            background-color: var(--accent);
+            color: white;
         }
         
         .progress-container {
@@ -168,13 +156,20 @@
         
         .progress-bar {
             height: 24px;
-            background-color: var(--accent);
+            background-color: var(--success);
             border-radius: 4px;
             width: 0%;
             transition: width 0.5s;
             text-align: center;
             line-height: 24px;
             color: white;
+        }
+        
+        .theory {
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
         }
         
         footer {
@@ -186,8 +181,13 @@
         }
         
         @media (max-width: 768px) {
-            .options, .calculator {
-                grid-template-columns: 1fr;
+            .tab-buttons {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                margin-right: 0;
+                margin-bottom: 0.25rem;
             }
         }
     </style>
@@ -195,119 +195,97 @@
 <body>
     <header>
         <div class="container">
-            <h1>Финансовая грамотность</h1>
-            <p>Изучаем проценты, вклады и готовимся к ЕГЭ</p>
+            <h1>Финансовый тренажёр</h1>
+            <p>Освойте проценты, вклады и кредиты на практике</p>
         </div>
     </header>
     
     <div class="container">
         <div class="game-section">
-            <h2>Тренажёр по процентам</h2>
+            <h2>Тренажёр по финансовой математике</h2>
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="openTab('simple')">Простые проценты</button>
-                <button class="tab-btn" onclick="openTab('complex')">Сложные проценты</button>
-                <button class="tab-btn" onclick="openTab('deposit')">Вклады и депозиты</button>
-                <button class="tab-btn" onclick="openTab('ege')">Задачи ЕГЭ</button>
+                <button class="tab-btn active" onclick="openTab('deposit')">Вклады</button>
+                <button class="tab-btn" onclick="openTab('annuity')">Аннуитетный кредит</button>
+                <button class="tab-btn" onclick="openTab('diff')">Дифференцированный кредит</button>
+                <button class="tab-btn" onclick="openTab('ege')">Подготовка к ЕГЭ</button>
+                <button class="tab-btn" onclick="openTab('theory')">Теория</button>
             </div>
             
-            <div id="simple" class="tab-content active">
+            <div id="deposit" class="tab-content active">
                 <div class="question">
-                    <h3>Задача 1</h3>
-                    <p>Вкладчик положил в банк 10 000 рублей под 5% годовых. Какая сумма будет на счету через 2 года при начислении простых процентов?</p>
-                    <div class="options">
-                        <div class="option" onclick="checkAnswer(this, 'b')">10 500 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">11 000 руб.</div>
-                        <div class="option correct" onclick="checkAnswer(this, 'a')">11 500 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">12 000 руб.</div>
+                    <h3>Задача на вклады</h3>
+                    <p id="deposit-question"></p>
+                    <div class="answer-form">
+                        <input type="number" id="deposit-answer" placeholder="Введите ответ">
+                        <button onclick="checkDepositAnswer()">Проверить</button>
                     </div>
-                </div>
-                
-                <div class="question">
-                    <h3>Задача 2</h3>
-                    <p>Сумма кредита составляет 50 000 рублей под 12% годовых. Какой будет сумма процентов за 3 года при простом проценте?</p>
-                    <div class="options">
-                        <div class="option" onclick="checkAnswer(this, 'b')">6 000 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">12 000 руб.</div>
-                        <div class="option correct" onclick="checkAnswer(this, 'a')">18 000 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">24 000 руб.</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="complex" class="tab-content">
-                <div class="question">
-                    <h3>Задача 1</h3>
-                    <p>Клиент положил в банк 20 000 рублей под 7% годовых с капитализацией процентов. Какая сумма будет на счету через 3 года?</p>
-                    <div class="options">
-                        <div class="option" onclick="checkAnswer(this, 'b')">22 400 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">23 800 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">24 500 руб.</div>
-                        <div class="option correct" onclick="checkAnswer(this, 'a')">24 500.86 руб.</div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <h3>Задача 2</h3>
-                    <p>Какой вклад выгоднее: 100 000 руб. под 6% с ежегодной капитализацией или под 6.5% с простыми процентами на 5 лет?</p>
-                    <div class="options">
-                        <div class="option correct" onclick="checkAnswer(this, 'a')">С капитализацией</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">С простыми процентами</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">Одинаково</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">Зависит от инфляции</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="deposit" class="tab-content">
-                <div class="question">
-                    <h3>Калькулятор вкладов</h3>
-                    <div class="calculator">
-                        <div>
-                            <label for="amount">Сумма вклада:</label>
-                            <input type="number" id="amount" placeholder="10000">
-                        </div>
-                        <div>
-                            <label for="rate">Процентная ставка:</label>
-                            <input type="number" id="rate" placeholder="5">
-                        </div>
-                        <div>
-                            <label for="period">Срок (лет):</label>
-                            <input type="number" id="period" placeholder="1">
-                        </div>
-                        <div>
-                            <label for="type">Тип процентов:</label>
-                            <select id="type">
-                                <option value="simple">Простые</option>
-                                <option value="complex">Сложные (с капитализацией)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button onclick="calculateDeposit()">Рассчитать</button>
                     <div class="result" id="deposit-result"></div>
                 </div>
+                <button onclick="generateDepositTask()">Следующая задача</button>
+            </div>
+            
+            <div id="annuity" class="tab-content">
+                <div class="question">
+                    <h3>Задача на аннуитетный кредит</h3>
+                    <p id="annuity-question"></p>
+                    <div class="answer-form">
+                        <input type="number" id="annuity-answer" placeholder="Введите ответ">
+                        <button onclick="checkAnnuityAnswer()">Проверить</button>
+                    </div>
+                    <div class="result" id="annuity-result"></div>
+                </div>
+                <button onclick="generateAnnuityTask()">Следующая задача</button>
+            </div>
+            
+            <div id="diff" class="tab-content">
+                <div class="question">
+                    <h3>Задача на дифференцированный кредит</h3>
+                    <p id="diff-question"></p>
+                    <div class="answer-form">
+                        <input type="text" id="diff-answer" placeholder="Введите два числа через пробел">
+                        <button onclick="checkDiffAnswer()">Проверить</button>
+                    </div>
+                    <div class="result" id="diff-result"></div>
+                </div>
+                <button onclick="generateDiffTask()">Следующая задача</button>
             </div>
             
             <div id="ege" class="tab-content">
                 <div class="question">
-                    <h3>Задача из ЕГЭ</h3>
-                    <p>31 декабря 2019 года Дмитрий взял в банке 4 595 000 рублей в кредит под 20% годовых. Какую сумму Дмитрий должен вернуть банку 31 декабря 2020 года?</p>
-                    <div class="options">
-                        <div class="option" onclick="checkAnswer(this, 'b')">4 595 000 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">4 914 000 руб.</div>
-                        <div class="option correct" onclick="checkAnswer(this, 'a')">5 514 000 руб.</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">5 595 000 руб.</div>
+                    <h3>Задача для подготовки к ЕГЭ</h3>
+                    <p id="ege-question"></p>
+                    <div class="answer-form">
+                        <input type="text" id="ege-answer" placeholder="Введите ответ">
+                        <button onclick="checkEgeAnswer()">Проверить</button>
                     </div>
+                    <div class="result" id="ege-result"></div>
+                </div>
+                <button onclick="generateEgeTask()">Следующая задача</button>
+            </div>
+            
+            <div id="theory" class="tab-content">
+                <div class="theory">
+                    <h3>Простые проценты</h3>
+                    <p>Формула: S = P × (1 + r × t)</p>
+                    <p>Где: S - итоговая сумма, P - начальная сумма, r - процентная ставка (в десятичной форме), t - время в годах.</p>
                 </div>
                 
-                <div class="question">
-                    <h3>Задача из ЕГЭ</h3>
-                    <p>В банк помещён вклад 64 000 рублей под 25% годовых. Сколько лет потребуется для увеличения вклада более чем в 4 раза при сложных процентах?</p>
-                    <div class="options">
-                        <div class="option" onclick="checkAnswer(this, 'b')">4 года</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">5 лет</div>
-                        <div class="option" onclick="checkAnswer(this, 'b')">6 лет</div>
-                        <div class="option correct" onclick="checkAnswer(this, 'a')">7 лет</div>
-                    </div>
+                <div class="theory">
+                    <h3>Сложные проценты</h3>
+                    <p>Формула: S = P × (1 + r)<sup>t</sup></p>
+                    <p>При капитализации проценты начисляются на проценты, поэтому сумма растёт быстрее.</p>
+                </div>
+                
+                <div class="theory">
+                    <h3>Аннуитетный платёж</h3>
+                    <p>Формула: Платёж = (P × r × (1 + r)<sup>n</sup>) / ((1 + r)<sup>n</sup> - 1)</p>
+                    <p>Где: P - сумма кредита, r - месячная ставка, n - количество месяцев.</p>
+                </div>
+                
+                <div class="theory">
+                    <h3>Дифференцированный платёж</h3>
+                    <p>Формула: Платёж = (P / n) + (P - (P/n)×(m-1)) × r</p>
+                    <p>Где: n - общее число месяцев, m - текущий месяц, r - месячная ставка.</p>
                 </div>
             </div>
             
@@ -315,38 +293,24 @@
                 <div class="progress-bar" id="progress">0%</div>
             </div>
         </div>
-        
-        <div class="game-section">
-            <h2>Теория</h2>
-            <h3>Простые проценты</h3>
-            <p>Формула: S = P × (1 + r × t)</p>
-            <p>Где: S - итоговая сумма, P - начальная сумма, r - процентная ставка (в десятичной форме), t - время в годах.</p>
-            
-            <h3>Сложные проценты</h3>
-            <p>Формула: S = P × (1 + r)<sup>t</sup></p>
-            <p>При капитализации проценты начисляются на проценты, поэтому сумма растёт быстрее.</p>
-            
-            <h3>Советы для ЕГЭ</h3>
-            <ul>
-                <li>Внимательно читайте условие - определяйте тип процентов</li>
-                <li>Переводите проценты в десятичную форму (5% = 0.05)</li>
-                <li>Проверяйте размерность (месяцы/годы)</li>
-                <li>Для сложных процентов используйте степень</li>
-            </ul>
-        </div>
     </div>
     
     <footer>
         <div class="container">
-            <p>© 2023 Финансовая грамотность. Подготовка к ЕГЭ.</p>
-            <p>Все задачи составлены на основе реальных примеров из банка заданий ФИПИ.</p>
+            <p>© 2023 Финансовый тренажёр. Подготовка к ЕГЭ.</p>
         </div>
     </footer>
     
     <script>
+        // Глобальные переменные для хранения текущих задач и результатов
+        let currentDepositTask = {};
+        let currentAnnuityTask = {};
+        let currentDiffTask = {};
+        let currentEgeTask = {};
         let score = 0;
-        const totalQuestions = 6;
+        let totalTasks = 0;
         
+        // Функции для работы с вкладками
         function openTab(tabName) {
             const tabContents = document.getElementsByClassName('tab-content');
             for (let i = 0; i < tabContents.length; i++) {
@@ -360,54 +324,282 @@
             
             document.getElementById(tabName).classList.add('active');
             event.currentTarget.classList.add('active');
+            
+            // При открытии вкладки генерируем новую задачу
+            if (tabName === 'deposit') generateDepositTask();
+            if (tabName === 'annuity') generateAnnuityTask();
+            if (tabName === 'diff') generateDiffTask();
+            if (tabName === 'ege') generateEgeTask();
         }
         
-        function checkAnswer(option, correct) {
-            const options = option.parentElement.children;
-            for (let i = 0; i < options.length; i++) {
-                options[i].classList.remove('correct', 'incorrect');
-                options[i].onclick = null;
+        // Функции для генерации задач
+        function generateDepositTask() {
+            const principal = Math.floor(Math.random() * 90000) + 10000;
+            const rate = Math.floor(Math.random() * 11) + 5;
+            const years = Math.floor(Math.random() * 5) + 1;
+            const isCompound = Math.random() > 0.5;
+            
+            let correct;
+            if (isCompound) {
+                correct = principal * Math.pow(1 + rate / 100, years);
+                document.getElementById('deposit-question').textContent = 
+                    `Вклад ${principal} руб. под ${rate}% годовых на ${years} год(а) с капитализацией. Сколько получит клиент?`;
+            } else {
+                correct = principal * (1 + rate / 100 * years);
+                document.getElementById('deposit-question').textContent = 
+                    `Вклад ${principal} руб. под ${rate}% годовых на ${years} год(а) без капитализации. Сколько получит клиент?`;
             }
             
-            if (option.classList.contains('correct')) {
-                option.classList.add('correct');
+            currentDepositTask = {
+                correct: Math.round(correct * 100) / 100
+            };
+            
+            document.getElementById('deposit-answer').value = '';
+            document.getElementById('deposit-result').textContent = '';
+            document.getElementById('deposit-result').className = 'result';
+        }
+        
+        function generateAnnuityTask() {
+            const principal = Math.floor(Math.random() * 900000) + 100000;
+            const rate = Math.floor(Math.random() * 11) + 10;
+            const years = Math.floor(Math.random() * 5) + 1;
+            const months = years * 12;
+            const monthlyRate = rate / 100 / 12;
+            
+            const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                          (Math.pow(1 + monthlyRate, months) - 1);
+            
+            document.getElementById('annuity-question').textContent = 
+                `Кредит ${principal} руб. под ${rate}% годовых на ${years} лет с аннуитетными платежами. Какой будет ежемесячный платёж?`;
+            
+            currentAnnuityTask = {
+                correct: Math.round(payment * 100) / 100
+            };
+            
+            document.getElementById('annuity-answer').value = '';
+            document.getElementById('annuity-result').textContent = '';
+            document.getElementById('annuity-result').className = 'result';
+        }
+        
+        function generateDiffTask() {
+            const principal = Math.floor(Math.random() * 900000) + 100000;
+            const rate = Math.floor(Math.random() * 11) + 10;
+            const years = Math.floor(Math.random() * 5) + 1;
+            const months = years * 12;
+            
+            const monthlyPrincipal = principal / months;
+            const firstPayment = monthlyPrincipal + principal * (rate / 100 / 12);
+            const lastPayment = monthlyPrincipal + monthlyPrincipal * (rate / 100 / 12);
+            
+            document.getElementById('diff-question').textContent = 
+                `Кредит ${principal} руб. под ${rate}% годовых на ${years} лет с дифференцированными платежами. Какой будет первый и последний платежи? (введите через пробел)`;
+            
+            currentDiffTask = {
+                correct: [
+                    Math.round(firstPayment * 100) / 100,
+                    Math.round(lastPayment * 100) / 100
+                ]
+            };
+            
+            document.getElementById('diff-answer').value = '';
+            document.getElementById('diff-result').textContent = '';
+            document.getElementById('diff-result').className = 'result';
+        }
+        
+        function generateEgeTask() {
+            const taskType = Math.floor(Math.random() * 3) + 1;
+            
+            if (taskType === 1) {
+                const principal = Math.floor(Math.random() * 90000) + 10000;
+                const years = Math.floor(Math.random() * 5) + 1;
+                
+                const rate1 = Math.floor(Math.random() * 11) + 5;
+                const rate2 = Math.floor(Math.random() * 11) + 5;
+                const type1 = Math.random() > 0.5 ? 'простыми' : 'сложными';
+                const type2 = Math.random() > 0.5 ? 'простыми' : 'сложными';
+                
+                let sum1, sum2;
+                
+                if (type1 === 'простыми') {
+                    sum1 = principal * (1 + rate1 / 100 * years);
+                } else {
+                    sum1 = principal * Math.pow(1 + rate1 / 100, years);
+                }
+                
+                if (type2 === 'простыми') {
+                    sum2 = principal * (1 + rate2 / 100 * years);
+                } else {
+                    sum2 = principal * Math.pow(1 + rate2 / 100, years);
+                }
+                
+                // Убедимся, что варианты разные
+                if (Math.abs(sum1 - sum2) < 100) {
+                    return generateEgeTask();
+                }
+                
+                document.getElementById('ege-question').textContent = 
+                    `Вкладчик хочет внести ${principal} руб. на ${years} лет. Выберите более выгодный вариант:
+                    Вариант 1: ${rate1}% годовых с ${type1} процентами.
+                    Вариант 2: ${rate2}% годовых с ${type2} процентами.
+                    Введите номер варианта (1 или 2):`;
+                
+                currentEgeTask = {
+                    correct: sum1 > sum2 ? '1' : '2'
+                };
+            }
+            else if (taskType === 2) {
+                const principal = Math.floor(Math.random() * 900000) + 100000;
+                const rate = Math.floor(Math.random() * 11) + 10;
+                const years = Math.floor(Math.random() * 5) + 1;
+                const months = years * 12;
+                const monthlyRate = rate / 100 / 12;
+                
+                const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                              (Math.pow(1 + monthlyRate, months) - 1);
+                const totalPayment = payment * months;
+                const overpayment = totalPayment - principal;
+                
+                document.getElementById('ege-question').textContent = 
+                    `Кредит ${principal} руб. под ${rate}% годовых на ${years} лет с аннуитетными платежами. Какова общая переплата по кредиту?`;
+                
+                currentEgeTask = {
+                    correct: Math.round(overpayment * 100) / 100
+                };
+            }
+            else if (taskType === 3) {
+                const principal = Math.floor(Math.random() * 400000) + 100000;
+                const multiplier = Math.random() * 1.2 + 1.3;
+                const target = Math.round(principal * multiplier);
+                const rate = Math.floor(Math.random() * 11) + 5;
+                
+                const t = Math.log(target / principal) / Math.log(1 + rate / 100);
+                const tYears = Math.ceil(t);
+                
+                document.getElementById('ege-question').textContent = 
+                    `Вклад ${principal} руб. под ${rate}% годовых с ежегодной капитализацией. Через сколько лет сумма превысит ${target} руб.?`;
+                
+                currentEgeTask = {
+                    correct: tYears.toString()
+                };
+            }
+            
+            document.getElementById('ege-answer').value = '';
+            document.getElementById('ege-result').textContent = '';
+            document.getElementById('ege-result').className = 'result';
+        }
+        
+        // Функции проверки ответов
+        function checkDepositAnswer() {
+            const userAnswer = parseFloat(document.getElementById('deposit-answer').value);
+            const resultDiv = document.getElementById('deposit-result');
+            
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'Пожалуйста, введите число';
+                return;
+            }
+            
+            const roundedUserAnswer = Math.round(userAnswer * 100) / 100;
+            const roundedCorrect = Math.round(currentDepositTask.correct * 100) / 100;
+            
+            if (Math.abs(roundedUserAnswer - roundedCorrect) < 0.01) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
                 score++;
             } else {
-                option.classList.add('incorrect');
-                // Находим правильный ответ и подсвечиваем его
-                for (let i = 0; i < options.length; i++) {
-                    if (options[i].classList.contains('correct')) {
-                        options[i].classList.add('correct');
-                    }
-                }
+                resultDiv.textContent = `✗ Неправильно. Правильный ответ: ${roundedCorrect}`;
+                resultDiv.className = 'result incorrect';
             }
             
+            totalTasks++;
             updateProgress();
         }
         
-        function calculateDeposit() {
-            const amount = parseFloat(document.getElementById('amount').value);
-            const rate = parseFloat(document.getElementById('rate').value) / 100;
-            const period = parseFloat(document.getElementById('period').value);
-            const type = document.getElementById('type').value;
+        function checkAnnuityAnswer() {
+            const userAnswer = parseFloat(document.getElementById('annuity-answer').value);
+            const resultDiv = document.getElementById('annuity-result');
             
-            let result;
-            if (type === 'simple') {
-                result = amount * (1 + rate * period);
-            } else {
-                result = amount * Math.pow(1 + rate, period);
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'Пожалуйста, введите число';
+                return;
             }
             
-            document.getElementById('deposit-result').innerHTML = 
-                `Итоговая сумма: ${result.toFixed(2)} руб.`;
+            const roundedUserAnswer = Math.round(userAnswer * 100) / 100;
+            const roundedCorrect = Math.round(currentAnnuityTask.correct * 100) / 100;
+            
+            if (Math.abs(roundedUserAnswer - roundedCorrect) < 0.01) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
+                score++;
+            } else {
+                resultDiv.textContent = `✗ Неправильно. Правильный ответ: ${roundedCorrect}`;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalTasks++;
+            updateProgress();
         }
         
+        function checkDiffAnswer() {
+            const userAnswer = document.getElementById('diff-answer').value.trim();
+            const resultDiv = document.getElementById('diff-result');
+            
+            const parts = userAnswer.split(/\s+/);
+            if (parts.length !== 2 || isNaN(parts[0]) || isNaN(parts[1])) {
+                resultDiv.textContent = 'Пожалуйста, введите два числа через пробел';
+                return;
+            }
+            
+            const userFirst = Math.round(parseFloat(parts[0]) * 100) / 100;
+            const userLast = Math.round(parseFloat(parts[1]) * 100) / 100;
+            const correctFirst = Math.round(currentDiffTask.correct[0] * 100) / 100;
+            const correctLast = Math.round(currentDiffTask.correct[1] * 100) / 100;
+            
+            if (Math.abs(userFirst - correctFirst) < 0.01 && 
+                Math.abs(userLast - correctLast) < 0.01) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
+                score++;
+            } else {
+                resultDiv.textContent = `✗ Неправильно. Правильные ответы: ${correctFirst} и ${correctLast}`;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalTasks++;
+            updateProgress();
+        }
+        
+        function checkEgeAnswer() {
+            const userAnswer = document.getElementById('ege-answer').value.trim();
+            const resultDiv = document.getElementById('ege-result');
+            
+            if (userAnswer === currentEgeTask.correct) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
+                score++;
+            } else {
+                resultDiv.textContent = `✗ Неправильно. Правильный ответ: ${currentEgeTask.correct}`;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalTasks++;
+            updateProgress();
+        }
+        
+        // Обновление прогресс-бара
         function updateProgress() {
-            const progress = Math.round((score / totalQuestions) * 100);
+            const progress = totalTasks > 0 ? Math.round((score / totalTasks) * 100) : 0;
             const progressBar = document.getElementById('progress');
             progressBar.style.width = `${progress}%`;
             progressBar.textContent = `${progress}%`;
         }
+        
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            generateDepositTask();
+            generateAnnuityTask();
+            generateDiffTask();
+            generateEgeTask();
+        };
     </script>
 </body>
 </html>
