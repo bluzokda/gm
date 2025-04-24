@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Финансовый тренажёр: проценты и кредиты</title>
     <style>
@@ -303,18 +302,6 @@
     </footer>
     
     <script>
-        // Функции безопасности
-        function sanitizeInput(input) {
-            if (typeof input !== 'string') return input;
-            return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        }
-
-        function validateNumber(input) {
-            if (typeof input !== 'string' && typeof input !== 'number') return NaN;
-            const num = parseFloat(input);
-            return isNaN(num) ? NaN : num;
-        }
-
         // Глобальные переменные для хранения текущих задач и результатов
         let currentDepositTask = {};
         let currentAnnuityTask = {};
@@ -501,12 +488,118 @@
             document.getElementById('ege-result').className = 'result';
         }
         
-        // Функции проверки ответов с защитой
+        // Функции проверки ответов
         function checkDepositAnswer() {
-            const userInput = document.getElementById('deposit-answer').value;
-            const sanitizedInput = sanitizeInput(userInput);
-            const userAnswer = validateNumber(sanitizedInput);
+            const userAnswer = parseFloat(document.getElementById('deposit-answer').value);
             const resultDiv = document.getElementById('deposit-result');
             
             if (isNaN(userAnswer)) {
-                resultDiv.textContent = 'Пожалуй
+                resultDiv.textContent = 'Пожалуйста, введите число';
+                return;
+            }
+            
+            const roundedUserAnswer = Math.round(userAnswer * 100) / 100;
+            const roundedCorrect = Math.round(currentDepositTask.correct * 100) / 100;
+            
+            if (Math.abs(roundedUserAnswer - roundedCorrect) < 0.01) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
+                score++;
+            } else {
+                resultDiv.textContent = `✗ Неправильно. Правильный ответ: ${roundedCorrect}`;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalTasks++;
+            updateProgress();
+        }
+        
+        function checkAnnuityAnswer() {
+            const userAnswer = parseFloat(document.getElementById('annuity-answer').value);
+            const resultDiv = document.getElementById('annuity-result');
+            
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'Пожалуйста, введите число';
+                return;
+            }
+            
+            const roundedUserAnswer = Math.round(userAnswer * 100) / 100;
+            const roundedCorrect = Math.round(currentAnnuityTask.correct * 100) / 100;
+            
+            if (Math.abs(roundedUserAnswer - roundedCorrect) < 0.01) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
+                score++;
+            } else {
+                resultDiv.textContent = `✗ Неправильно. Правильный ответ: ${roundedCorrect}`;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalTasks++;
+            updateProgress();
+        }
+        
+        function checkDiffAnswer() {
+            const userAnswer = document.getElementById('diff-answer').value.trim();
+            const resultDiv = document.getElementById('diff-result');
+            
+            const parts = userAnswer.split(/\s+/);
+            if (parts.length !== 2 || isNaN(parts[0]) || isNaN(parts[1])) {
+                resultDiv.textContent = 'Пожалуйста, введите два числа через пробел';
+                return;
+            }
+            
+            const userFirst = Math.round(parseFloat(parts[0]) * 100) / 100;
+            const userLast = Math.round(parseFloat(parts[1]) * 100) / 100;
+            const correctFirst = Math.round(currentDiffTask.correct[0] * 100) / 100;
+            const correctLast = Math.round(currentDiffTask.correct[1] * 100) / 100;
+            
+            if (Math.abs(userFirst - correctFirst) < 0.01 && 
+                Math.abs(userLast - correctLast) < 0.01) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
+                score++;
+            } else {
+                resultDiv.textContent = `✗ Неправильно. Правильные ответы: ${correctFirst} и ${correctLast}`;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalTasks++;
+            updateProgress();
+        }
+        
+        function checkEgeAnswer() {
+            const userAnswer = document.getElementById('ege-answer').value.trim();
+            const resultDiv = document.getElementById('ege-result');
+            
+            if (userAnswer === currentEgeTask.correct) {
+                resultDiv.textContent = '✓ Правильно!';
+                resultDiv.className = 'result correct';
+                score++;
+            } else {
+                resultDiv.textContent = `✗ Неправильно. Правильный ответ: ${currentEgeTask.correct}`;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalTasks++;
+            updateProgress();
+        }
+        
+        // Обновление прогресс-бара
+        function updateProgress() {
+            const progress = totalTasks > 0 ? Math.round((score / totalTasks) * 100) : 0;
+            const progressBar = document.getElementById('progress');
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+        }
+        
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            generateDepositTask();
+            generateAnnuityTask();
+            generateDiffTask();
+            generateEgeTask();
+        };
+    </script>
+</body>
+</html>
