@@ -601,7 +601,15 @@
 
     function generateEgeTask() {
         answeredEge = false;
-        document.getElementById('ege-answer').disabled = false;
+        const answerField = document.getElementById('ege-answer');
+        answerField.disabled = false;
+        answerField.value = '';
+        answerField.classList.remove('bg-yellow-100', 'text-yellow-800');
+        
+        const resultDiv = document.getElementById('ege-result');
+        resultDiv.textContent = '';
+        resultDiv.classList.add('hidden');
+        resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
         
         const taskType = Math.floor(Math.random() * 3) + 1;
         
@@ -632,10 +640,10 @@
                 return generateEgeTask();
             }
             
-            document.getElementById('ege-question').textContent = 
-                `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:
-                Вариант 1: ${rate1}% годовых с ${type1} процентами.
-                Вариант 2: ${rate2}% годовых с ${type2} процентами.
+              document.getElementById('ege-question').innerHTML = 
+                `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:<br><br>
+                <strong>Вариант 1:</strong> ${rate1}% годовых с ${type1} процентами<br>
+                <strong>Вариант 2:</strong> ${rate2}% годовых с ${type2} процентами<br><br>
                 Введите номер варианта (1 или 2):`;
             
             currentEgeTask = {
