@@ -601,15 +601,7 @@
 
     function generateEgeTask() {
         answeredEge = false;
-        const answerField = document.getElementById('ege-answer');
-        answerField.disabled = false;
-        answerField.value = '';
-        answerField.classList.remove('bg-yellow-100', 'text-yellow-800');
-        
-        const resultDiv = document.getElementById('ege-result');
-        resultDiv.textContent = '';
-        resultDiv.classList.add('hidden');
-        resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+        document.getElementById('ege-answer').disabled = false;
         
         const taskType = Math.floor(Math.random() * 3) + 1;
         
@@ -640,10 +632,10 @@
                 return generateEgeTask();
             }
             
-              document.getElementById('ege-question').textContent  = 
-                `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:<br><br>
-                <strong>Вариант 1:</strong> ${rate1}% годовых с ${type1} процентами<br>
-                <strong>Вариант 2:</strong> ${rate2}% годовых с ${type2} процентами<br><br>
+            document.getElementById('ege-question').textContent = 
+                `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:
+                Вариант 1: ${rate1}% годовых с ${type1} процентами.
+                Вариант 2: ${rate2}% годовых с ${type2} процентами.
                 Введите номер варианта (1 или 2):`;
             
             currentEgeTask = {
@@ -693,6 +685,237 @@
         resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
     }
 </script>
+                
+                // Убедимся, что варианты разные
+                if (Math.abs(sum1 - sum2) < 100) {
+                    return generateEgeTask();
+                }
+                
+                document.getElementById('ege-question').textContent = 
+                    `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:
+                    Вариант 1: ${rate1}% годовых с ${type1} процентами.
+                    Вариант 2: ${rate2}% годовых с ${type2} процентами.
+                    Введите номер варианта (1 или 2):`;
+                
+                currentEgeTask = {
+                    correct: sum1 > sum2 ? '1' : '2'
+                };
+            }
+            else if (taskType === 2) {
+                const principal = Math.floor(Math.random() * 900000) + 100000;
+                const rate = Math.floor(Math.random() * 11) + 10;
+                const years = Math.floor(Math.random() * 5) + 1;
+                const months = years * 12;
+                const monthlyRate = rate / 100 / 12;
+                
+                const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                              (Math.pow(1 + monthlyRate, months) - 1);
+                const totalPayment = payment * months;
+                const overpayment = totalPayment - principal;
+                
+                document.getElementById('ege-question').textContent = 
+                    `Кредит ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых на ${years} лет с аннуитетными платежами. Какова общая переплата по кредиту?`;
+                
+                currentEgeTask = {
+                    correct: Math.round(overpayment * 100) / 100
+                };
+            }
+            else if (taskType === 3) {
+                const principal = Math.floor(Math.random() * 400000) + 100000;
+                const multiplier = Math.random() * 1.2 + 1.3;
+                const target = Math.round(principal * multiplier);
+                const rate = Math.floor(Math.random() * 11) + 5;
+                
+                const t = Math.log(target / principal) / Math.log(1 + rate / 100);
+                const tYears = Math.ceil(t);
+                
+                document.getElementById('ege-question').textContent = 
+                    `Вклад ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых с ежегодной капитализацией. Через сколько лет сумма превысит ${target.toLocaleString('ru-RU')} руб.?`;
+                
+                currentEgeTask = {
+                    correct: tYears.toString()
+                };
+            }
+            
+            document.getElementById('ege-answer').value = '';
+            const resultDiv = document.getElementById('ege-result');
+            resultDiv.textContent = '';
+            resultDiv.classList.add('hidden');
+            resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+        }
+        
+        // Функции проверки ответов
+        function checkDepositAnswer() {
+            const userInput = document.getElementById('deposit-answer').value;
+            const sanitizedInput = sanitizeInput(userInput);
+            const userAnswer = validateNumber(sanitizedInput);
+            const resultDiv = document.getElementById('deposit-result');
+            
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'Пожалуйста, введите корректное число';
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+                return;
+            }
+            
+            totalTasks++;
+            const roundedAnswer = Math.round(userAnswer * 100) / 100;
+            
+            if (Math.abs(roundedAnswer - currentDepositTask.correct) < 0.01) {
+                resultDiv.textContent = `Правильно! Ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+                resultDiv.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+                resultDiv.classList.add('bg-green-100', 'text-green-800');
+                score++;
+            } else {
+                resultDiv.textContent = `Неправильно. Правильный ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+            }
+            
+            resultDiv.classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function checkAnnuityAnswer() {
+            const userInput = document.getElementById('annuity-answer').value;
+            const sanitizedInput = sanitizeInput(userInput);
+            const userAnswer = validateNumber(sanitizedInput);
+            const resultDiv = document.getElementById('annuity-result');
+            
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'Пожалуйста, введите корректное число';
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+                return;
+            }
+            
+            totalTasks++;
+            const roundedAnswer = Math.round(userAnswer * 100) / 100;
+            
+            if (Math.abs(roundedAnswer - currentAnnuityTask.correct) < 0.01) {
+                resultDiv.textContent = `Правильно! Ответ: ${currentAnnuityTask.correct.toLocaleString('ru-RU')} руб.`;
+                resultDiv.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+                resultDiv.classList.add('bg-green-100', 'text-green-800');
+                score++;
+            } else {
+                resultDiv.textContent = `Неправильно. Правильный ответ: ${currentAnnuityTask.correct.toLocaleString('ru-RU')} руб.`;
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+            }
+            
+            resultDiv.classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function checkDiffAnswer() {
+            const userInput = document.getElementById('diff-answer').value;
+            const sanitizedInput = sanitizeInput(userInput);
+            const resultDiv = document.getElementById('diff-result');
+            
+            const parts = sanitizedInput.trim().split(/\s+/);
+            if (parts.length !== 2 || isNaN(parts[0]) || isNaN(parts[1])) {
+                resultDiv.textContent = 'Пожалуйста, введите два числа через пробел';
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+                return;
+            }
+            
+            totalTasks++;
+            const userAnswer1 = Math.round(parseFloat(parts[0]) * 100) / 100;
+            const userAnswer2 = Math.round(parseFloat(parts[1]) * 100) / 100;
+            
+            const correct1 = currentDiffTask.correct[0];
+            const correct2 = currentDiffTask.correct[1];
+            
+            if (Math.abs(userAnswer1 - correct1) < 0.01 && Math.abs(userAnswer2 - correct2) < 0.01) {
+                resultDiv.textContent = `Правильно! Ответ: ${correct1.toLocaleString('ru-RU')} руб. и ${correct2.toLocaleString('ru-RU')} руб.`;
+                resultDiv.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+                resultDiv.classList.add('bg-green-100', 'text-green-800');
+                score++;
+            } else {
+                resultDiv.textContent = `Неправильно. Правильный ответ: ${correct1.toLocaleString('ru-RU')} руб. и ${correct2.toLocaleString('ru-RU')} руб.`;
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+            }
+            
+            resultDiv.classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function checkEgeAnswer() {
+            const userInput = document.getElementById('ege-answer').value;
+            const sanitizedInput = sanitizeInput(userInput).trim();
+            const resultDiv = document.getElementById('ege-result');
+            
+            if (sanitizedInput === '') {
+                resultDiv.textContent = 'Пожалуйста, введите ответ';
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+                return;
+            }
+            
+            totalTasks++;
+            let isCorrect = false;
+            
+            if (typeof currentEgeTask.correct === 'string') {
+                // Для вариантов 1/2 или количества лет
+                isCorrect = sanitizedInput === currentEgeTask.correct;
+            } else {
+                // Для числового ответа
+                const userAnswer = validateNumber(sanitizedInput);
+                if (!isNaN(userAnswer)) {
+                    isCorrect = Math.abs(userAnswer - currentEgeTask.correct) < 0.01;
+                }
+            }
+            
+            if (isCorrect) {
+                if (typeof currentEgeTask.correct === 'string') {
+                    resultDiv.textContent = 'Правильно!';
+                } else {
+                    resultDiv.textContent = `Правильно! Ответ: ${currentEgeTask.correct.toLocaleString('ru-RU')} руб.`;
+                }
+                resultDiv.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+                resultDiv.classList.add('bg-green-100', 'text-green-800');
+                score++;
+            } else {
+                if (typeof currentEgeTask.correct === 'string') {
+                    resultDiv.textContent = `Неправильно. Правильный ответ: ${currentEgeTask.correct}`;
+                } else {
+                    resultDiv.textContent = `Неправильно. Правильный ответ: ${currentEgeTask.correct.toLocaleString('ru-RU')} руб.`;
+                }
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                resultDiv.classList.add('bg-red-100', 'text-red-800');
+            }
+            
+            resultDiv.classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            const progress = totalTasks > 0 ? Math.round((score / totalTasks) * 100) : 0;
+            const progressBar = document.getElementById('progress');
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+            
+            // Изменяем цвет в зависимости от прогресса
+            if (progress < 30) {
+                progressBar.classList.remove('bg-yellow-500', 'bg-green-500');
+                progressBar.classList.add('bg-red-500');
+            } else if (progress < 70) {
+                progressBar.classList.remove('bg-red-500', 'bg-green-500');
+                progressBar.classList.add('bg-yellow-500');
+            } else {
+                progressBar.classList.remove('bg-red-500', 'bg-yellow-500');
+                progressBar.classList.add('bg-green-500');
+            }
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackground();
+            generateDepositTask();
+        });
+    </script>
 <script>
     // Чистильщик (добавьте перед закрывающим </body> или в конец <script>)
     function cleanUpPage() {
