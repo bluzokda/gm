@@ -744,24 +744,24 @@
             resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
         }
         
-        // Функции проверки ответов
+ // Функции проверки ответов
         function checkDepositAnswer() {
             const userInput = document.getElementById('deposit-answer').value;
             const sanitizedInput = sanitizeInput(userInput);
             const userAnswer = validateNumber(sanitizedInput);
             const resultDiv = document.getElementById('deposit-result');
             
-            if (isNaN(userAnswer)) {
+  if (isNaN(userAnswer)) {
                 resultDiv.textContent = 'Пожалуйста, введите корректное число';
                 resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
                 resultDiv.classList.add('bg-red-100', 'text-red-800');
                 return;
             }
             
-            totalTasks++;
+ totalTasks++;
             const roundedAnswer = Math.round(userAnswer * 100) / 100;
             
-            if (Math.abs(roundedAnswer - currentDepositTask.correct) < 0.01) {
+   if (Math.abs(roundedAnswer - currentDepositTask.correct) < 0.01) {
                 resultDiv.textContent = `Правильно! Ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
                 resultDiv.classList.remove('hidden', 'bg-red-100', 'text-red-800');
                 resultDiv.classList.add('bg-green-100', 'text-green-800');
@@ -897,7 +897,7 @@
             progressBar.style.width = `${progress}%`;
             progressBar.textContent = `${progress}%`;
             
-            // Изменяем цвет в зависимости от прогресса
+ // Изменяем цвет в зависимости от прогресса
             if (progress < 30) {
                 progressBar.classList.remove('bg-yellow-500', 'bg-green-500');
                 progressBar.classList.add('bg-red-500');
@@ -908,14 +908,14 @@
                 progressBar.classList.remove('bg-red-500', 'bg-yellow-500');
                 progressBar.classList.add('bg-green-500');
             }
-        }
+  }
         
-        // Инициализация
+// Инициализация
         document.addEventListener('DOMContentLoaded', function() {
             createBackground();
             generateDepositTask();
         });
-    </script>
+ </script>
 <script>
     // Чистильщик (добавьте перед закрывающим </body> или в конец <script>)
     function cleanUpPage() {
