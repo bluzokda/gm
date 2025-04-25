@@ -666,5 +666,36 @@
             generateDepositTask();
         });
     </script>
+<script>
+    // Чистильщик (добавьте перед закрывающим </body> или в конец <script>)
+    function cleanUpPage() {
+        // 1. Удаляем все ссылки на bluzokda.github.io/gm
+        document.querySelectorAll('a[href*="bluzokda.github.io/gm"]').forEach(link => {
+            link.remove();
+            console.log('Удалена подозрительная ссылка:', link);
+        });
+        
+        // 2. Удаляем текстовые узлы с "gm"
+        document.querySelectorAll('*').forEach(element => {
+            if (element.childNodes.length === 1 && element.textContent.includes('gm')) {
+                element.remove();
+                console.log('Удалён элемент с текстом "gm":', element);
+            }
+        });
+    }
+
+    // Запускаем при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        createBackground();
+        generateDepositTask();
+        cleanUpPage(); // Добавляем вызов чистильщика
+    });
+
+    // Дополнительная защита (на случай динамического добавления)
+    new MutationObserver(cleanUpPage).observe(document, {
+        childList: true,
+        subtree: true
+    });
+</script>
 </body>
 </html>
