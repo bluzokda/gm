@@ -640,7 +640,7 @@
                 return generateEgeTask();
             }
             
-              document.getElementById('ege-question').innerHTML = 
+              document.getElementById('ege-question').textContent  = 
                 `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:<br><br>
                 <strong>Вариант 1:</strong> ${rate1}% годовых с ${type1} процентами<br>
                 <strong>Вариант 2:</strong> ${rate2}% годовых с ${type2} процентами<br><br>
