@@ -22,10 +22,21 @@ body {
 .circle {
     position: absolute;
     border-radius: 50%;
-    background: rgba(52, 152, 219, 0.1);
-    animation: float 15s infinite linear;
-    filter: blur(15px);
+    background: rgba(255, 255, 255, 0.15);
+    animation: float linear infinite;
+    filter: blur(20px);
     will-change: transform, opacity;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 /* Объединённая анимация float */
