@@ -41,6 +41,103 @@ let answeredAnnuity = false;
 let answeredDiff = false;
 let answeredEge = false;
 
+// Глобальные переменные для хранения ответов
+let userAnswers = {
+    deposit: null,
+    annuity: null,
+    diff: null,
+    ege: null
+};
+
+// Функции проверки ответов
+function checkDepositAnswer() {
+    const answerInput = document.getElementById('deposit-answer');
+    const resultDiv = document.getElementById('deposit-result');
+    
+    // Если ответ уже был отправлен
+    if (userAnswers.deposit !== null) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+    
+    const userInput = answerInput.value;
+    const sanitizedInput = sanitizeInput(userInput);
+    const userAnswer = validateNumber(sanitizedInput);
+    
+    if (isNaN(userAnswer)) {
+        resultDiv.textContent = 'Пожалуйста, введите корректное число';
+        resultDiv.classList.remove('hidden', 'bg-green-100');
+        resultDiv.classList.add('bg-red-100', 'text-red-800');
+        return;
+    }
+    
+    // Фиксируем ответ
+    userAnswers.deposit = userAnswer;
+    totalTasks++;
+    
+    const roundedAnswer = Math.round(userAnswer * 100) / 100;
+    const isCorrect = Math.abs(roundedAnswer - currentDepositTask.correct) < 0.01;
+    
+    if (isCorrect) {
+        resultDiv.textContent = `Правильно! Ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.classList.remove('bg-red-100', 'text-red-800');
+        resultDiv.classList.add('bg-green-100', 'text-green-800');
+        score++;
+    } else {
+        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.classList.remove('bg-green-100', 'text-green-800');
+        resultDiv.classList.add('bg-red-100', 'text-red-800');
+    }
+    
+    resultDiv.classList.remove('hidden');
+    answerInput.disabled = true;
+    updateProgress();
+}
+
+// Аналогичные изменения для других функций проверки
+function checkDepositAnswer() {
+    const answerInput = document.getElementById('annuity-answer');
+    const resultDiv = document.getElementById('annuity-result');
+    
+    if (userAnswers.deposit !== null) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+function checkAnnuityAnswer() {
+    const answerInput = document.getElementById('annuity-answer');
+    const resultDiv = document.getElementById('annuity-result');
+    
+    if (userAnswers.annuity !== null) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+function checkDiffAnswer() {
+    const answerInput = document.getElementById('annuity-answer');
+    const resultDiv = document.getElementById('annuity-result');
+    
+    if (userAnswers.diff !== null) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+function checkEgeAnswer() {
+    const answerInput = document.getElementById('annuity-answer');
+    const resultDiv = document.getElementById('annuity-result');
+    
+    if (userAnswers.ege !== null) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+
 // Функция для создания анимированного фона
 function createBackground() {
     const bgAnimation = document.querySelector('.bg-animation');
