@@ -1,18 +1,43 @@
 function createBackground() {
-    console.log("Creating background animation..."); // Проверить в консоли
     const bgAnimation = document.querySelector('.bg-animation');
-    console.log("Background element:", bgAnimation); // Должен вывести элемент
+    if (!bgAnimation) {
+        console.error('Элемент .bg-animation не найден!');
+        return;
+    }
+    
+    bgAnimation.innerHTML = ''; // Очищаем предыдущие круги
     
     const colors = [
         'rgba(255, 255, 255, 0.2)',
-        'rgba(255, 215, 0, 0.2)',
-        'rgba(0, 191, 255, 0.2)'
+        'rgba(200, 230, 255, 0.3)',
+        'rgba(150, 200, 255, 0.25)'
     ];
     
     for (let i = 0; i < 15; i++) {
         const circle = document.createElement('div');
         circle.classList.add('circle');
         
+        const size = Math.random() * 200 + 100;
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 500 + Math.random() * 500;
+        
+        circle.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${Math.random() * 100}vw;
+            top: ${Math.random() * 100}vh;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            animation-duration: ${20 + Math.random() * 40}s;
+            animation-delay: ${Math.random() * -20}s;
+            --tx: ${Math.cos(angle) * distance}px;
+            --ty: ${Math.sin(angle) * distance}px;
+        `;
+        
+        bgAnimation.appendChild(circle);
+    }
+    console.log('Создано анимированных кругов:', bgAnimation.children.length);
+}
+
         // Случайные параметры
         const size = Math.random() * 300 + 100;
         const posX = Math.random() * window.innerWidth;
