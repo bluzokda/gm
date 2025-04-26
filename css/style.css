@@ -22,9 +22,10 @@ body {
 .circle {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    animation: float linear infinite;
-    filter: blur(20px);
+    background: rgba(52, 152, 219, 0.1);
+    animation: float 15s infinite linear;
+    filter: blur(15px);
+    will-change: transform, opacity;
 }
 
 /* Объединённая анимация float */
