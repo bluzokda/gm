@@ -1,3 +1,11 @@
+/* ВРЕМЕННЫЙ ТЕСТ - УДАЛИТЬ ПОСЛЕ ПРОВЕРКИ */
+.bg-animation {
+  background: red !important;
+  border: 3px dashed yellow !important;
+  opacity: 0.9 !important;
+  z-index: 9999 !important; /* Поднять поверх всех элементов */
+  display: block !important;
+}
 body {
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
