@@ -5,6 +5,13 @@ function createBackground() {
         return;
     }
     
+    // Временная проверка - выводим информацию о контейнере
+    console.log('Контейнер bgAnimation:', {
+        width: bgAnimation.offsetWidth,
+        height: bgAnimation.offsetHeight,
+        style: window.getComputedStyle(bgAnimation)
+    });
+    
     bgAnimation.innerHTML = ''; // Очищаем предыдущие круги
     
     const colors = [
@@ -33,10 +40,21 @@ function createBackground() {
             --ty: ${Math.sin(angle) * distance}px;
         `;
         
+        // Временная проверка - выводим информацию о созданном круге
+        console.log(`Создан круг #${i+1}:`, circle.style.cssText);
+        
         bgAnimation.appendChild(circle);
     }
     console.log('Создано анимированных кругов:', bgAnimation.children.length);
-} // ← Только ОДНА закрывающая скобка здесь    
+    
+    // Временная проверка - проверяем, есть ли CSS-анимация для .circle
+    const tempCircle = document.querySelector('.circle');
+    if (tempCircle) {
+        console.log('Проверка анимации:', window.getComputedStyle(tempCircle).animationName);
+    } else {
+        console.error('Круги не были созданы!');
+    }
+} 
         // Случайные параметры
         const size = Math.random() * 300 + 100;
         const posX = Math.random() * window.innerWidth;
