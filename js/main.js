@@ -1,7 +1,7 @@
 function createBackground() {
-    console.log("Creating background animation");    
+    console.log("Creating background animation..."); // Проверить в консоли
     const bgAnimation = document.querySelector('.bg-animation');
-    bgAnimation.innerHTML = ''; // Очищаем предыдущие круги
+    console.log("Background element:", bgAnimation); // Должен вывести элемент
     
     const colors = [
         'rgba(255, 255, 255, 0.2)',
