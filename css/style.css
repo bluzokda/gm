@@ -68,3 +68,19 @@ body {
             70% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
             100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
         }
+/* Стили для уведомлений */
+.bg-yellow-100 {
+    background-color: #fef9c3;
+}
+
+.text-yellow-800 {
+    color: #92400e;
+}
+
+/* Дополнительные стили для сообщения о повторном ответе */
+.answered-message {
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-weight: 500;
+}
