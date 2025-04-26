@@ -1,4 +1,5 @@
 function createBackground() {
+    console.log("Creating background animation");    
     const bgAnimation = document.querySelector('.bg-animation');
     bgAnimation.innerHTML = ''; // Очищаем предыдущие круги
     
