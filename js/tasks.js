@@ -347,38 +347,39 @@
                     </div>
                 </div>
                 
-                <div id="ege" class="tab-content hidden">
-                    <div class="bg-blue-50 rounded-xl p-6 mb-6">
-                        <h3 class="text-xl font-semibold text-blue-800 mb-3">Задача для подготовки к ЕГЭ</h3>
-                        <p id="ege-question" class="mb-4 text-gray-700"></p>
-                        
-                        <div class="flex flex-col md:flex-row gap-4 items-start md:items-end">
-                            <div class="w-full md:w-auto flex-1">
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Ваш ответ:</label>
-                                <input type="text" id="ege-answer" placeholder="Введите ответ" 
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                <div id="ege-alert" class="hidden text-sm mt-1"></div>
-                            </div>
-                            <button onclick="checkEgeAnswer()" 
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all shadow-md hover:shadow-lg pulse">
-                                Проверить
-                            </button>
-                        </div>
-                        
-                        <div id="ege-result" class="mt-4 p-3 rounded-lg hidden"></div>
-                    </div>
-                    
-                    <div class="flex justify-between items-center">
-                        <button onclick="generateEgeTask()" 
-                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-all">
-                            <span class="mr-2">🔄</span> Новая задача
-                        </button>
-                        
-                        <div class="text-sm text-gray-500">
-                            <span id="ege-score">0</span> из <span id="ege-total">0</span> верно
-                        </div>
-                    </div>
-                </div>
+<!-- Раздел ЕГЭ -->
+<div id="ege" class="tab-content hidden">
+    <div class="bg-blue-50 rounded-xl p-6 mb-6">
+        <h3 class="text-xl font-semibold text-blue-800 mb-3">Задача для подготовки к ЕГЭ</h3>
+        <p id="ege-question" class="mb-4 text-gray-700"></p>
+        
+        <div class="flex flex-col md:flex-row gap-4 items-start md:items-end">
+            <div class="w-full md:w-auto flex-1">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Ваш ответ:</label>
+                <input type="text" id="ege-answer" placeholder="Введите ответ" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                <div id="ege-alert" class="hidden text-sm mt-1"></div>
+            </div>
+            <button onclick="checkEgeAnswer()" 
+                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all shadow-md hover:shadow-lg pulse">
+                Проверить
+            </button>
+        </div>
+        
+        <div id="ege-result" class="mt-4 p-3 rounded-lg hidden"></div>
+    </div>
+    
+    <div class="flex justify-between items-center">
+        <button onclick="generateEgeTask()" 
+            class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-all">
+            <span class="mr-2">🔄</span> Новая задача
+        </button>
+        
+        <div class="text-sm text-gray-500">
+            <span id="ege-score">0</span> из <span id="ege-total">0</span> верно
+        </div>
+    </div>
+</div>
                 
                 <div id="theory" class="tab-content hidden">
                     <div class="bg-blue-50 rounded-lg p-4 mb-4">
