@@ -1,8 +1,3 @@
-/* Временная проверка фона (удалить после теста) */
-.bg-animation {
-    background: red !important;
-    border: 3px dashed yellow !important; /* Дополнительная визуальная подсказка */
-}
 body {
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
