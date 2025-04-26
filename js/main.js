@@ -2,12 +2,14 @@
 let currentDepositTask = {};
 let currentAnnuityTask = {};
 let currentDiffTask = {};
+let currentInvestTask = {};
 let currentEgeTask = {};
 let score = 0;
 let totalTasks = 0;
 let answeredDeposit = false;
 let answeredAnnuity = false;
 let answeredDiff = false;
+let answeredInvest = false;
 let answeredEge = false;
 
 // Создание анимированного фона
@@ -72,10 +74,13 @@ function openTab(tabName) {
     event.currentTarget.classList.remove('bg-blue-100', 'text-blue-800', 'hover:bg-blue-200');
     event.currentTarget.classList.add('bg-blue-600', 'text-white');
     
+    // Генерация задач при переключении вкладок
     if (tabName === 'deposit') generateDepositTask();
     if (tabName === 'annuity') generateAnnuityTask();
     if (tabName === 'diff') generateDiffTask();
+    if (tabName === 'invest') generateInvestTask();
     if (tabName === 'ege') generateEgeTask();
+    // Для теории не генерируем задачи
 }
 
 // Обновление прогресса
@@ -83,7 +88,7 @@ function updateProgress() {
     let totalCorrect = 0;
     let totalTasks = 0;
     
-    ['deposit', 'annuity', 'diff', 'ege'].forEach(type => {
+    ['deposit', 'annuity', 'diff', 'invest', 'ege'].forEach(type => {
         totalCorrect += parseInt(document.getElementById(`${type}-score`).textContent);
         totalTasks += parseInt(document.getElementById(`${type}-total`).textContent);
     });
