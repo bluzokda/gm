@@ -1,11 +1,21 @@
+// Глобальные переменные
+let currentDepositTask = {};
+let currentAnnuityTask = {};
+let currentDiffTask = {};
+let currentEgeTask = {};
+let score = 0;
+let totalTasks = 0;
+let answeredDeposit = false;
+let answeredAnnuity = false;
+let answeredDiff = false;
+let answeredEge = false;
+
+// Создание анимированного фона
 function createBackground() {
     const bgAnimation = document.querySelector('.bg-animation');
-    if (!bgAnimation) {
-        console.error('Элемент .bg-animation не найден!');
-        return;
-    }    
-    bgAnimation.innerHTML = ''; // Очищаем предыдущие круги
+    if (!bgAnimation) return;
     
+    bgAnimation.innerHTML = '';
     const colors = [
         'rgba(255, 255, 255, 0.2)',
         'rgba(200, 230, 255, 0.3)',
@@ -16,31 +26,12 @@ function createBackground() {
         const circle = document.createElement('div');
         circle.classList.add('circle');
         
-        const size = Math.random() * 200 + 100;
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 500 + Math.random() * 500;
-        
-        circle.style.cssText = `
-            width: ${size}px;
-            height: ${size}px;
-            left: ${Math.random() * 100}vw;
-            top: ${Math.random() * 100}vh;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            animation-duration: ${20 + Math.random() * 40}s;
-            animation-delay: ${Math.random() * -20}s;
-            --tx: ${Math.cos(angle) * distance}px;
-            --ty: ${Math.sin(angle) * distance}px;
-        `;
-        
-        // Случайные параметры
         const size = Math.random() * 300 + 100;
         const posX = Math.random() * window.innerWidth;
         const posY = Math.random() * window.innerHeight;
         const duration = Math.random() * 30 + 20;
         const delay = Math.random() * -20;
         const color = colors[Math.floor(Math.random() * colors.length)];
-        
-        // Динамическое направление движения
         const angle = Math.random() * Math.PI * 2;
         const distance = 500 + Math.random() * 500;
         const tx = Math.cos(angle) * distance;
@@ -61,156 +52,8 @@ function createBackground() {
         bgAnimation.appendChild(circle);
     }
 }
-// Глобальные переменные
-let currentDepositTask = {};
-let currentAnnuityTask = {};
-let currentDiffTask = {};
-let currentEgeTask = {};
-let score = 0;
-let totalTasks = 0;
-let answeredDeposit = false;
-let answeredAnnuity = false;
-let answeredDiff = false;
-let answeredEge = false;
 
-// Глобальные переменные для хранения ответов
-let userAnswers = {
-    deposit: null,
-    annuity: null,
-    diff: null,
-    ege: null
-};
-
-// Функции проверки ответов
-function checkDepositAnswer() {
-    const answerInput = document.getElementById('deposit-answer');
-    const resultDiv = document.getElementById('deposit-result');
-    
-    // Если ответ уже был отправлен
-    if (userAnswers.deposit !== null) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
-        return;
-    }
-    
-    const userInput = answerInput.value;
-    const sanitizedInput = sanitizeInput(userInput);
-    const userAnswer = validateNumber(sanitizedInput);
-    
-    if (isNaN(userAnswer)) {
-        resultDiv.textContent = 'Пожалуйста, введите корректное число';
-        resultDiv.classList.remove('hidden', 'bg-green-100');
-        resultDiv.classList.add('bg-red-100', 'text-red-800');
-        return;
-    }
-    
-    // Фиксируем ответ
-    userAnswers.deposit = userAnswer;
-    totalTasks++;
-    
-    const roundedAnswer = Math.round(userAnswer * 100) / 100;
-    const isCorrect = Math.abs(roundedAnswer - currentDepositTask.correct) < 0.01;
-    
-    if (isCorrect) {
-        resultDiv.textContent = `Правильно! Ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
-        resultDiv.classList.remove('bg-red-100', 'text-red-800');
-        resultDiv.classList.add('bg-green-100', 'text-green-800');
-        score++;
-    } else {
-        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
-        resultDiv.classList.remove('bg-green-100', 'text-green-800');
-        resultDiv.classList.add('bg-red-100', 'text-red-800');
-    }
-    
-    resultDiv.classList.remove('hidden');
-    answerInput.disabled = true;
-    updateProgress();
-}
-
-// Аналогичные изменения для других функций проверки
-function checkDepositAnswer() {
-    const answerInput = document.getElementById('annuity-answer');
-    const resultDiv = document.getElementById('annuity-result');
-    
-    if (userAnswers.deposit !== null) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
-        return;
-    }
-function checkAnnuityAnswer() {
-    const answerInput = document.getElementById('annuity-answer');
-    const resultDiv = document.getElementById('annuity-result');
-    
-    if (userAnswers.annuity !== null) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
-        return;
-    }
-function checkDiffAnswer() {
-    const answerInput = document.getElementById('annuity-answer');
-    const resultDiv = document.getElementById('annuity-result');
-    
-    if (userAnswers.diff !== null) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
-        return;
-    }
-function checkEgeAnswer() {
-    const answerInput = document.getElementById('annuity-answer');
-    const resultDiv = document.getElementById('annuity-result');
-    
-    if (userAnswers.ege !== null) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
-        return;
-    }
-
-// Функция для создания анимированного фона
-function createBackground() {
-    const bgAnimation = document.querySelector('.bg-animation');
-    const colors = ['rgba(52, 152, 219, 0.1)', 'rgba(155, 89, 182, 0.1)', 'rgba(26, 188, 156, 0.1)'];
-    
-    for (let i = 0; i < 20; i++) {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        
-        const size = Math.random() * 200 + 50;
-        const posX = Math.random() * window.innerWidth;
-        const posY = Math.random() * window.innerHeight;
-        const delay = Math.random() * 5;
-        const duration = Math.random() * 20 + 10;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        
-        circle.style.width = `${size}px`;
-        circle.style.height = `${size}px`;
-        circle.style.left = `${posX}px`;
-        circle.style.top = `${posY}px`;
-        circle.style.animationDelay = `${delay}s`;
-        circle.style.animationDuration = `${duration}s`;
-        circle.style.background = color;
-        
-        bgAnimation.appendChild(circle);
-    }
-}
-
-// Функции безопасности
-function sanitizeInput(input) {
-    if (typeof input !== 'string') return input;
-    return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function validateNumber(input) {
-    if (typeof input !== 'string' && typeof input !== 'number') return NaN;
-    const num = parseFloat(input);
-    return isNaN(num) ? NaN : num;
-}
-
-// Функция для переключения вкладок
+// Управление табами
 function openTab(tabName) {
     const tabContents = document.getElementsByClassName('tab-content');
     for (let i = 0; i < tabContents.length; i++) {
@@ -221,30 +64,46 @@ function openTab(tabName) {
     const tabButtons = document.getElementsByClassName('tab-btn');
     for (let i = 0; i < tabButtons.length; i++) {
         tabButtons[i].classList.remove('bg-blue-600', 'text-white');
-        tabButtons[i].classList.add('bg-gray-200', 'hover:bg-gray-300');
+        tabButtons[i].classList.add('bg-blue-100', 'text-blue-800', 'hover:bg-blue-200');
     }
     
     document.getElementById(tabName).classList.remove('hidden');
     document.getElementById(tabName).classList.add('active');
-    event.currentTarget.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+    event.currentTarget.classList.remove('bg-blue-100', 'text-blue-800', 'hover:bg-blue-200');
     event.currentTarget.classList.add('bg-blue-600', 'text-white');
     
-    // Генерация задач при переключении вкладок
     if (tabName === 'deposit') generateDepositTask();
     if (tabName === 'annuity') generateAnnuityTask();
     if (tabName === 'diff') generateDiffTask();
     if (tabName === 'ege') generateEgeTask();
 }
 
-// Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM загружен, запускаем создание фона');
-    createBackground();
+// Обновление прогресса
+function updateProgress() {
+    let totalCorrect = 0;
+    let totalTasks = 0;
     
-    // Для отладки - проверка видимости фона
-    const bg = document.querySelector('.bg-animation');
-    if (bg) {
-        bg.style.border = '2px solid red'; // Временная рамка для отладки
-        setTimeout(() => { bg.style.border = 'none' }, 3000);
+    ['deposit', 'annuity', 'diff', 'ege'].forEach(type => {
+        totalCorrect += parseInt(document.getElementById(`${type}-score`).textContent);
+        totalTasks += parseInt(document.getElementById(`${type}-total`).textContent);
+    });
+    
+    const progress = totalTasks > 0 ? Math.round((totalCorrect / totalTasks) * 100) : 0;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+    document.getElementById('total-score').textContent = progress;
+    
+    const progressBar = document.getElementById('progress-bar');
+    if (progress < 30) {
+        progressBar.className = 'bg-gradient-to-r from-red-500 to-red-600 h-3 rounded-full progress-bar';
+    } else if (progress < 70) {
+        progressBar.className = 'bg-gradient-to-r from-yellow-500 to-yellow-600 h-3 rounded-full progress-bar';
+    } else {
+        progressBar.className = 'bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full progress-bar';
     }
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', function() {
+    createBackground();
+    generateDepositTask();
 });
