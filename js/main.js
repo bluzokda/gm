@@ -1,37 +1,6 @@
 function createBackground() {
     const bgAnimation = document.querySelector('.bg-animation');
-    const colors = ['rgba(52, 152, 219, 0.1)', 'rgba(155, 89, 182, 0.1)', 'rgba(26, 188, 156, 0.1)'];
-    
-    // Создаем 20 анимированных кругов
-    for (let i = 0; i < 20; i++) {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        
-        // Случайные параметры для круга
-        const size = Math.random() * 200 + 50;
-        const posX = Math.random() * window.innerWidth;
-        const posY = Math.random() * window.innerHeight;
-        const delay = Math.random() * 5;
-        const duration = Math.random() * 20 + 10;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        
-        // Применяем параметры к кругу
-        circle.style.width = `${size}px`;
-        circle.style.height = `${size}px`;
-        circle.style.left = `${posX}px`;
-        circle.style.top = `${posY}px`;
-        circle.style.animationDelay = `${delay}s`;
-        circle.style.animationDuration = `${duration}s`;
-        circle.style.background = color;
-        
-        // Добавляем круг на страницу
-        bgAnimation.appendChild(circle);
-    }
-}
-
-function createBackground() {
-    const bgAnimation = document.querySelector('.bg-animation');
-    bgAnimation.innerHTML = '';
+    bgAnimation.innerHTML = ''; // Очищаем предыдущие круги
     
     const colors = [
         'rgba(255, 255, 255, 0.2)',
@@ -43,6 +12,35 @@ function createBackground() {
         const circle = document.createElement('div');
         circle.classList.add('circle');
         
+        // Случайные параметры
+        const size = Math.random() * 300 + 100;
+        const posX = Math.random() * window.innerWidth;
+        const posY = Math.random() * window.innerHeight;
+        const duration = Math.random() * 30 + 20;
+        const delay = Math.random() * -20;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Динамическое направление движения
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 500 + Math.random() * 500;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        circle.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${posX}px;
+            top: ${posY}px;
+            background: ${color};
+            animation-duration: ${duration}s;
+            animation-delay: ${delay}s;
+            --tx: ${tx}px;
+            --ty: ${ty}px;
+        `;
+        
+        bgAnimation.appendChild(circle);
+    }
+}        
         // Случайные параметры
         const size = Math.random() * 300 + 100;
         const posX = Math.random() * window.innerWidth;
