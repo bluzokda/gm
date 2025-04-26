@@ -1,20 +1,10 @@
        // Модифицированные функции генерации задач с сбросом флагов
 function generateDepositTask() {
-    // Сброс состояния ответа
-    userAnswers.deposit = null;
     answeredDeposit = false;
-    
-    // Сброс UI элементов
     document.getElementById('deposit-alert').classList.add('hidden');
     document.getElementById('deposit-answer').disabled = false;
     document.getElementById('deposit-answer').value = '';
-    
-    const resultDiv = document.getElementById('deposit-result');
-    resultDiv.textContent = '';
-    resultDiv.classList.add('hidden');
-    resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
 
-    // Генерация новой задачи
     const principal = Math.floor(Math.random() * 90000) + 10000;
     const rate = Math.floor(Math.random() * 11) + 5;
     const years = Math.floor(Math.random() * 5) + 1;
@@ -34,93 +24,90 @@ function generateDepositTask() {
     currentDepositTask = {
         correct: Math.round(correct * 100) / 100
     };
+    
+    const resultDiv = document.getElementById('deposit-result');
+    resultDiv.textContent = '';
+    resultDiv.classList.add('hidden');
+    resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
 }
 
-function generateAnnuityTask() {
-    // Сброс состояния ответа
-    userAnswers.annuity = null;
-    answeredAnnuity = false;
-    
-    // Сброс UI элементов
+function generateАnnuityTask() {
+    answeredАnnuity = false;
     document.getElementById('annuity-alert').classList.add('hidden');
     document.getElementById('annuity-answer').disabled = false;
     document.getElementById('annuity-answer').value = '';
+
+    const principal = Math.floor(Math.random() * 90000) + 10000;
+    const rate = Math.floor(Math.random() * 11) + 5;
+    const years = Math.floor(Math.random() * 5) + 1;
+    const isCompound = Math.random() > 0.5;
+    
+    let correct;
+    if (isCompound) {
+        correct = principal * Math.pow(1 + rate / 100, years);
+        document.getElementById('annuity-question').textContent = 
+            `Вклад ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых на ${years} год(а) с капитализацией. Сколько получит клиент?`;
+    } else {
+        correct = principal * (1 + rate / 100 * years);
+        document.getElementById('annuity-question').textContent = 
+            `Вклад ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых на ${years} год(а) без капитализации. Сколько получит клиент?`;
+    }
+    
+    currentАnnuityTask = {
+        correct: Math.round(correct * 100) / 100
+    };
     
     const resultDiv = document.getElementById('annuity-result');
     resultDiv.textContent = '';
     resultDiv.classList.add('hidden');
     resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-
-    // Генерация новой задачи
-    const principal = Math.floor(Math.random() * 900000) + 100000;
-    const rate = Math.floor(Math.random() * 11) + 10;
-    const years = Math.floor(Math.random() * 5) + 1;
-    const months = years * 12;
-    const monthlyRate = rate / 100 / 12;
-    
-    const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
-                  (Math.pow(1 + monthlyRate, months) - 1);
-    
-    document.getElementById('annuity-question').textContent = 
-        `Кредит ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых на ${years} лет с аннуитетными платежами. Какой будет ежемесячный платёж?`;
-    
-    currentAnnuityTask = {
-        correct: Math.round(payment * 100) / 100
-    };
 }
 
 function generateDiffTask() {
-    // Сброс состояния ответа
-    userAnswers.diff = null;
     answeredDiff = false;
-    
-    // Сброс UI элементов
     document.getElementById('diff-alert').classList.add('hidden');
     document.getElementById('diff-answer').disabled = false;
     document.getElementById('diff-answer').value = '';
+
+    const principal = Math.floor(Math.random() * 90000) + 10000;
+    const rate = Math.floor(Math.random() * 11) + 5;
+    const years = Math.floor(Math.random() * 5) + 1;
+    const isCompound = Math.random() > 0.5;
+    
+    let correct;
+    if (isCompound) {
+        correct = principal * Math.pow(1 + rate / 100, years);
+        document.getElementById('diff-question').textContent = 
+            `Вклад ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых на ${years} год(а) с капитализацией. Сколько получит клиент?`;
+    } else {
+        correct = principal * (1 + rate / 100 * years);
+        document.getElementById('diff-question').textContent = 
+            `Вклад ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых на ${years} год(а) без капитализации. Сколько получит клиент?`;
+    }
+    
+    currentDiffTask = {
+        correct: Math.round(correct * 100) / 100
+    };
     
     const resultDiv = document.getElementById('diff-result');
     resultDiv.textContent = '';
     resultDiv.classList.add('hidden');
     resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-
-    // Генерация новой задачи
-    const principal = Math.floor(Math.random() * 900000) + 100000;
-    const rate = Math.floor(Math.random() * 11) + 10;
-    const years = Math.floor(Math.random() * 5) + 1;
-    const months = years * 12;
-    
-    const monthlyPrincipal = principal / months;
-    const firstPayment = monthlyPrincipal + principal * (rate / 100 / 12);
-    const lastPayment = monthlyPrincipal + monthlyPrincipal * (rate / 100 / 12);
-    
-    document.getElementById('diff-question').textContent = 
-        `Кредит ${principal.toLocaleString('ru-RU')} руб. под ${rate}% годовых на ${years} лет с дифференцированными платежами. Какой будет первый и последний платежи? (введите через пробел)`;
-    
-    currentDiffTask = {
-        correct: [
-            Math.round(firstPayment * 100) / 100,
-            Math.round(lastPayment * 100) / 100
-        ]
-    };
 }
 
 function generateEgeTask() {
-    // Сброс состояния ответа
-    userAnswers.ege = null;  // Исправлено на строчную 'ege' для единообразия
+    // Сброс состояния и UI
     answeredEge = false;
-    
-    // Сброс UI элементов
     document.getElementById('ege-alert').classList.add('hidden');
     document.getElementById('ege-answer').disabled = false;
     document.getElementById('ege-answer').value = '';
-    
+
     const resultDiv = document.getElementById('ege-result');
     resultDiv.textContent = '';
     resultDiv.classList.add('hidden');
     resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
 
-    // Генерация новой задачи (сохранена оригинальная логика)
+    // Генерация задачи
     const taskType = Math.floor(Math.random() * 3) + 1;
     
     if (taskType === 1) {
@@ -151,10 +138,10 @@ function generateEgeTask() {
         }
         
         document.getElementById('ege-question').textContent = 
-            `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:
-            Вариант 1: ${rate1}% годовых с ${type1} процентами.
-            Вариант 2: ${rate2}% годовых с ${type2} процентами.
-            Введите номер варианта (1 или 2):`;
+            `Вкладчик хочет внести ${principal.toLocaleString('ru-RU')} руб. на ${years} лет. Выберите более выгодный вариант:\n` +
+            `Вариант 1: ${rate1}% годовых с ${type1} процентами.\n` +
+            `Вариант 2: ${rate2}% годовых с ${type2} процентами.\n` +
+            `Введите номер варианта (1 или 2):`;
         
         currentEgeTask = {
             correct: sum1 > sum2 ? '1' : '2'
