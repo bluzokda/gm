@@ -1,8 +1,9 @@
        // Модифицированные функции генерации задач с сбросом флагов
-    function generateDepositTask() {
-        answeredDeposit = false;
-        document.getElementById('deposit-answer').disabled = false;
-        
+function generateDepositTask() {
+    userAnswers.deposit = null;
+    document.getElementById('deposit-answer').disabled = false;
+    document.getElementById('deposit-answer').value = '';
+
         const principal = Math.floor(Math.random() * 90000) + 10000;
         const rate = Math.floor(Math.random() * 11) + 5;
         const years = Math.floor(Math.random() * 5) + 1;
@@ -30,9 +31,10 @@
         resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
     }
 
-    function generateAnnuityTask() {
-        answeredAnnuity = false;
-        document.getElementById('annuity-answer').disabled = false;
+function generateAnnuityTask() {
+    userAnswers.annuity = null;
+    document.getElementById('deposit-answer').disabled = false;
+    document.getElementById('deposit-answer').value = '';
         
         const principal = Math.floor(Math.random() * 900000) + 100000;
         const rate = Math.floor(Math.random() * 11) + 10;
@@ -57,9 +59,10 @@
         resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
     }
 
-    function generateDiffTask() {
-        answeredDiff = false;
-        document.getElementById('diff-answer').disabled = false;
+function generateDiffTask() {
+    userAnswers.diff = null;
+    document.getElementById('deposit-answer').disabled = false;
+    document.getElementById('deposit-answer').value = '';
         
         const principal = Math.floor(Math.random() * 900000) + 100000;
         const rate = Math.floor(Math.random() * 11) + 10;
@@ -87,9 +90,10 @@
         resultDiv.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
     }
 
-    function generateEgeTask() {
-        answeredEge = false;
-        document.getElementById('ege-answer').disabled = false;
+function generateEgeTask() {
+    userAnswers.Ege = null;
+    document.getElementById('deposit-answer').disabled = false;
+    document.getElementById('deposit-answer').value = '';
         
         const taskType = Math.floor(Math.random() * 3) + 1;
         
