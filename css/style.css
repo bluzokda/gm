@@ -84,3 +84,16 @@ body {
     margin-top: 10px;
     font-weight: 500;
 }
+
+/* Стили для сообщений */
+.text-yellow-600 {
+    color: #d97706;
+}
+
+.text-red-600 {
+    color: #dc2626;
+}
+
+.font-medium {
+    font-weight: 500;
+}
