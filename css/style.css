@@ -146,3 +146,28 @@ body, html {
 .text-red-800 { color: #991b1b; }
 .bg-yellow-100 { background-color: #fef9c3; }
 .text-yellow-800 { color: #92400e; }
+
+.tab-content {
+    transition: opacity 0.3s ease;
+}
+
+.theory-example {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-left: 4px solid #3b82f6;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 0 8px 8px 0;
+}
+
+.formula {
+    font-family: 'Courier New', monospace;
+    background-color: #f3f4f6;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #1e40af;
+    font-weight: bold;
+}
+
+.result {
+    transition: all 0.3s ease;
+}
