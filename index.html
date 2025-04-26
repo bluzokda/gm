@@ -29,13 +29,81 @@
     </div>
     
     <!-- Главный контент -->
-    <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white py-8 shadow-lg relative overflow-hidden">
-        <div class="absolute inset-0 bg-white opacity-10"></div>
-        <div class="container mx-auto px-4 relative">
-            <h1 class="text-4xl md:text-5xl font-bold mb-2 text-center floating">Финансовый тренажёр</h1>
-            <p class="text-xl text-center opacity-90">Освойте проценты, вклады и кредиты на практике</p>
-        </div>
-    </header>
+<header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white py-8 shadow-lg relative overflow-hidden">
+    <!-- Анимированный фон хедера -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="header-animation"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Анимированный заголовок -->
+        <h1 class="text-4xl md:text-5xl font-bold mb-2 text-center text-white animate-title">
+            <span class="text-gradient">Финансовый тренажёр</span>
+        </h1>
+        <p class="text-xl text-center opacity-90 animate-subtitle">Освойте проценты, вклады и кредиты на практике</p>
+    </div>
+</header>
+
+<style>
+    /* Анимация фона хедера */
+    .header-animation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, 
+            rgba(255,255,255,0.1) 0%, 
+            rgba(255,255,255,0) 50%, 
+            rgba(255,255,255,0.1) 100%);
+        background-size: 200% 200%;
+        animation: headerShine 8s ease infinite;
+    }
+    
+    @keyframes headerShine {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Анимация заголовка */
+    .animate-title {
+        perspective: 1000px;
+    }
+    
+    .text-gradient {
+        background: linear-gradient(90deg, 
+            #ffffff 0%, 
+            #a7d8ff 50%, 
+            #ffffff 100%);
+        background-size: 200% auto;
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        animation: textShine 3s linear infinite;
+        display: inline-block;
+    }
+    
+    @keyframes textShine {
+        to { background-position: 200% center; }
+    }
+    
+    /* Анимация подзаголовка */
+    .animate-subtitle {
+        animation: fadeInUp 1.5s ease-out both;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+    }
+</style>
     
     <div class="container mx-auto px-4 py-8">
         <div class="bg-white rounded-xl shadow-xl overflow-hidden mb-8 transform transition-all hover:shadow-2xl">
