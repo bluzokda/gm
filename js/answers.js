@@ -1,13 +1,9 @@
    // Функции проверки ответов с проверкой на повторный ответ
-function checkDepositAnswer() {
-    if (answeredDeposit) {
-        const resultDiv = document.getElementById('deposit-result');
-        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
-        resultDiv.classList.remove('hidden');
-        return;
-    }
-    
+    function checkDepositAnswer() {
+        if (answeredDeposit) {
+            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
+            return;
+        }
         
         const userInput = document.getElementById('deposit-answer').value;
         const sanitizedInput = sanitizeInput(userInput);
@@ -41,15 +37,11 @@ function checkDepositAnswer() {
         updateProgress();
     }
 
-function checkAnnuityAnswer() {
-    if (answeredAnnuity) {
-        const resultDiv = document.getElementById('deposit-result');
-        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
-        resultDiv.classList.remove('hidden');
-        return;
-    }
-    
+    function checkAnnuityAnswer() {
+        if (answeredAnnuity) {
+            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
+            return;
+        }
         
         const userInput = document.getElementById('annuity-answer').value;
         const sanitizedInput = sanitizeInput(userInput);
@@ -83,15 +75,11 @@ function checkAnnuityAnswer() {
         updateProgress();
     }
 
-function checkDiffAnswer() {
-    if (answeredDiff) {
-        const resultDiv = document.getElementById('deposit-result');
-        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
-        resultDiv.classList.remove('hidden');
-        return;
-    }
-    
+    function checkDiffAnswer() {
+        if (answeredDiff) {
+            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
+            return;
+        }
         
         const userInput = document.getElementById('diff-answer').value;
         const sanitizedInput = sanitizeInput(userInput);
@@ -129,15 +117,11 @@ function checkDiffAnswer() {
         updateProgress();
     }
 
-function checkEgeAnswer() {
-    if (answeredEge) {
-        const resultDiv = document.getElementById('deposit-result');
-        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
-        resultDiv.classList.remove('hidden');
-        return;
-    }
-    
+    function checkEgeAnswer() {
+        if (answeredEge) {
+            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
+            return;
+        }
         
         const userInput = document.getElementById('ege-answer').value;
         const sanitizedInput = sanitizeInput(userInput).trim();
