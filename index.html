@@ -41,11 +41,18 @@
                     <button class="tab-btn bg-blue-100 text-blue-800 px-5 py-3 rounded-lg hover:bg-blue-200" onclick="openTab('diff')">
                         <span class="mr-2">📉</span> Дифференцированный кредит
                     </button>
+                    <button class="tab-btn bg-blue-100 text-blue-800 px-5 py-3 rounded-lg hover:bg-blue-200" onclick="openTab('invest')">
+                        <span class="mr-2">📈</span> Инвестиции
+                    </button>
                     <button class="tab-btn bg-blue-100 text-blue-800 px-5 py-3 rounded-lg hover:bg-blue-200" onclick="openTab('ege')">
-                        <span class="mr-2">🎓</span> Подготовка к ЕГЭ
+                        <span class="mr-2">🎓</span> ЕГЭ
+                    </button>
+                    <button class="tab-btn bg-blue-100 text-blue-800 px-5 py-3 rounded-lg hover:bg-blue-200" onclick="openTab('theory')">
+                        <span class="mr-2">📚</span> Теория
                     </button>
                 </div>
                 
+                <!-- Вклады -->
                 <div id="deposit" class="tab-content">
                     <div class="bg-blue-50 rounded-xl p-6 mb-6">
                         <h3 class="text-xl font-semibold text-blue-800 mb-3">Задача на вклады</h3>
@@ -79,6 +86,7 @@
                     </div>
                 </div>
                 
+                <!-- Аннуитетный кредит -->
                 <div id="annuity" class="tab-content hidden">
                     <div class="bg-blue-50 rounded-xl p-6 mb-6">
                         <h3 class="text-xl font-semibold text-blue-800 mb-3">Задача на аннуитетный кредит</h3>
@@ -112,6 +120,7 @@
                     </div>
                 </div>
                 
+                <!-- Дифференцированный кредит -->
                 <div id="diff" class="tab-content hidden">
                     <div class="bg-blue-50 rounded-xl p-6 mb-6">
                         <h3 class="text-xl font-semibold text-blue-800 mb-3">Задача на дифференцированный кредит</h3>
@@ -145,6 +154,41 @@
                     </div>
                 </div>
                 
+                <!-- Инвестиции -->
+                <div id="invest" class="tab-content hidden">
+                    <div class="bg-blue-50 rounded-xl p-6 mb-6">
+                        <h3 class="text-xl font-semibold text-blue-800 mb-3">Задача на инвестиции</h3>
+                        <p id="invest-question" class="mb-4 text-gray-700"></p>
+                        
+                        <div class="flex flex-col md:flex-row gap-4 items-start md:items-end">
+                            <div class="w-full md:w-auto flex-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Ваш ответ (руб.):</label>
+                                <input type="number" id="invest-answer" placeholder="Введите сумму" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                <div id="invest-alert" class="hidden text-sm mt-1"></div>
+                            </div>
+                            <button onclick="checkInvestAnswer()" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all shadow-md hover:shadow-lg pulse">
+                                Проверить
+                            </button>
+                        </div>
+                        
+                        <div id="invest-result" class="mt-4 p-3 rounded-lg hidden"></div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <button onclick="generateInvestTask()" 
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-all">
+                            <span class="mr-2">🔄</span> Новая задача
+                        </button>
+                        
+                        <div class="text-sm text-gray-500">
+                            <span id="invest-score">0</span> из <span id="invest-total">0</span> верно
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ЕГЭ -->
                 <div id="ege" class="tab-content hidden">
                     <div class="bg-blue-50 rounded-xl p-6 mb-6">
                         <h3 class="text-xl font-semibold text-blue-800 mb-3">Задача для подготовки к ЕГЭ</h3>
@@ -178,6 +222,57 @@
                     </div>
                 </div>
                 
+                <!-- Теория -->
+                <div id="theory" class="tab-content hidden">
+                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                        <h3 class="text-xl font-semibold text-blue-800 mb-3">Простые проценты</h3>
+                        <p class="mb-2 text-gray-700"><span class="font-bold">Формула:</span> <span class="formula">S = P × (1 + r × t)</span></p>
+                        <p class="text-gray-700">Где: S - итоговая сумма, P - начальная сумма, r - процентная ставка (в десятичной форме), t - время в годах.</p>
+                        <div class="theory-example">
+                            <p class="font-medium">Пример:</p>
+                            <p>Вклад 10 000 руб. под 5% годовых на 3 года без капитализации:</p>
+                            <p class="formula">10 000 × (1 + 0.05 × 3) = 11 500 руб.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                        <h3 class="text-xl font-semibold text-blue-800 mb-3">Сложные проценты</h3>
+                        <p class="mb-2 text-gray-700"><span class="font-bold">Формула:</span> <span class="formula">S = P × (1 + r)<sup>t</sup></span></p>
+                        <p class="text-gray-700">При капитализации проценты начисляются на проценты, поэтому сумма растёт быстрее.</p>
+                        <div class="theory-example">
+                            <p class="font-medium">Пример:</p>
+                            <p>Вклад 10 000 руб. под 5% годовых на 3 года с капитализацией:</p>
+                            <p class="formula">10 000 × (1 + 0.05)<sup>3</sup> ≈ 11 576,25 руб.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                        <h3 class="text-xl font-semibold text-blue-800 mb-3">Аннуитетный платёж</h3>
+                        <p class="mb-2 text-gray-700"><span class="font-bold">Формула:</span> <span class="formula">Платёж = (P × r × (1 + r)<sup>n</sup>) / ((1 + r)<sup>n</sup> - 1)</span></p>
+                        <p class="text-gray-700">Где: P - сумма кредита, r - месячная ставка, n - количество месяцев.</p>
+                        <div class="theory-example">
+                            <p class="font-medium">Пример:</p>
+                            <p>Кредит 100 000 руб. на 1 год под 12% годовых:</p>
+                            <p>Месячная ставка: 12%/12 = 1% = 0.01</p>
+                            <p class="formula">Платёж = (100000×0.01×(1+0.01)<sup>12</sup>)/((1+0.01)<sup>12</sup>-1) ≈ 8 885 руб.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <h3 class="text-xl font-semibold text-blue-800 mb-3">Дифференцированный платёж</h3>
+                        <p class="mb-2 text-gray-700"><span class="font-bold">Формула:</span> <span class="formula">Платёж = (P / n) + (P - (P/n)×(m-1)) × r</span></p>
+                        <p class="text-gray-700">Где: n - общее число месяцев, m - текущий месяц, r - месячная ставка.</p>
+                        <div class="theory-example">
+                            <p class="font-medium">Пример:</p>
+                            <p>Кредит 100 000 руб. на 1 год под 12% годовых:</p>
+                            <p>Основной платёж: 100000/12 ≈ 8 333 руб.</p>
+                            <p class="formula">Первый платёж: 8 333 + (100000 × 0.01) ≈ 9 333 руб.</p>
+                            <p class="formula">Последний платёж: 8 333 + (8 333 × 0.01) ≈ 8 416 руб.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Прогресс -->
                 <div class="mt-8">
                     <h3 class="text-lg font-semibold text-gray-700 mb-3">Общий прогресс</h3>
                     <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
