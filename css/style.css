@@ -1,21 +1,3 @@
-/* ================== */
-/* НАЧАЛО ТЕСТА ФОНА  */
-/* ================== */
-.bg-animation {
-  background: red !important;            /* Яркий фоновый цвет */
-  border: 3px dashed yellow !important;  /* Контур для точного позиционирования */
-  opacity: 0.9 !important;               /* Убедимся, что не прозрачный */
-  z-index: 99999 !important;             /* Поднимем поверх ВСЕГО */
-  display: block !important;             /* Принудительное отображение */
-}
-
-/* Затемнение основного контента для наглядности */
-body > *:not(.bg-animation) {
-  opacity: 0.3 !important;
-}
-/* ================== */
-/* КОНЕЦ ТЕСТА ФОНА   */
-/* ================== */
 body {
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
