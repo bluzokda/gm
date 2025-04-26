@@ -1,151 +1,184 @@
    // Функции проверки ответов с проверкой на повторный ответ
 function checkDepositAnswer() {
     const alertDiv = document.getElementById('deposit-alert');
+    const answerInput = document.getElementById('deposit-answer');
+    const resultDiv = document.getElementById('deposit-result');
     
     if (answeredDeposit) {
         alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
         alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-yellow-600', 'font-medium');
         return;
     }
     
-    const userInput = document.getElementById('deposit-answer').value;
-    const sanitizedInput = sanitizeInput(userInput);
-    const userAnswer = validateNumber(sanitizedInput);
-    const resultDiv = document.getElementById('deposit-result');
+    const userInput = answerInput.value;
+    const userAnswer = parseFloat(userInput);
     
     if (isNaN(userAnswer)) {
         alertDiv.textContent = 'Пожалуйста, введите корректное число';
         alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-red-600', 'font-medium');
         return;
-    } else {
-        alertDiv.classList.add('hidden'); // Скрываем сообщение, если ответ корректен
     }
     
-    // Остальная логика проверки...
     answeredDeposit = true;
-    document.getElementById('deposit-answer').disabled = true;
+    totalTasks++;
+    
+    const roundedAnswer = Math.round(userAnswer * 100) / 100;
+    const isCorrect = Math.abs(roundedAnswer - currentDepositTask.correct) < 0.01;
+    
+    if (isCorrect) {
+        resultDiv.textContent = `Правильно! Ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-green-100 text-green-800';
+        score++;
+    } else {
+        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
+    }
+    
+    resultDiv.classList.remove('hidden');
+    answerInput.disabled = true;
     updateProgress();
 }
 
-function checkAnnuityAnswer() {
-    const alertDiv = document.getElementById('annuity-alert');
+function checkАnnuityAnswer() {
+    const alertDiv = document.getElementById('deposit-alert');
+    const answerInput = document.getElementById('deposit-answer');
+    const resultDiv = document.getElementById('deposit-result');
     
-    if (answeredDeposit) {
+    if (answeredАnnuity) {
         alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
         alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-yellow-600', 'font-medium');
         return;
     }
     
-    const userInput = document.getElementById('annuity-answer').value;
-    const sanitizedInput = sanitizeInput(userInput);
-    const userAnswer = validateNumber(sanitizedInput);
-    const resultDiv = document.getElementById('annuity-result');
+    const userInput = answerInput.value;
+    const userAnswer = parseFloat(userInput);
     
     if (isNaN(userAnswer)) {
         alertDiv.textContent = 'Пожалуйста, введите корректное число';
         alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-red-600', 'font-medium');
         return;
-    } else {
-        alertDiv.classList.add('hidden'); // Скрываем сообщение, если ответ корректен
     }
     
-    // Остальная логика проверки...
-    answeredDeposit = true;
-    document.getElementById('annuity-answer').disabled = true;
+    answeredАnnuity = true;
+    totalTasks++;
+    
+    const roundedAnswer = Math.round(userAnswer * 100) / 100;
+    const isCorrect = Math.abs(roundedAnswer - currentАnnuityTask.correct) < 0.01;
+    
+    if (isCorrect) {
+        resultDiv.textContent = `Правильно! Ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-green-100 text-green-800';
+        score++;
+    } else {
+        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentАnnuityTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
+    }
+    
+    resultDiv.classList.remove('hidden');
+    answerInput.disabled = true;
     updateProgress();
 }
 
 function checkDiffAnswer() {
-    const alertDiv = document.getElementById('diff-alert');
+    const alertDiv = document.getElementById('deposit-alert');
+    const answerInput = document.getElementById('deposit-answer');
+    const resultDiv = document.getElementById('deposit-result');
     
-    if (answeredDeposit) {
+    if (answeredDiff) {
         alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
         alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-yellow-600', 'font-medium');
         return;
     }
     
-    const userInput = document.getElementById('diff-answer').value;
-    const sanitizedInput = sanitizeInput(userInput);
-    const userAnswer = validateNumber(sanitizedInput);
-    const resultDiv = document.getElementById('diff-result');
+    const userInput = answerInput.value;
+    const userAnswer = parseFloat(userInput);
     
     if (isNaN(userAnswer)) {
         alertDiv.textContent = 'Пожалуйста, введите корректное число';
         alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-red-600', 'font-medium');
         return;
-    } else {
-        alertDiv.classList.add('hidden'); // Скрываем сообщение, если ответ корректен
     }
     
-    // Остальная логика проверки...
-    answeredDeposit = true;
-    document.getElementById('diff-answer').disabled = true;
+    answeredDiff = true;
+    totalTasks++;
+    
+    const roundedAnswer = Math.round(userAnswer * 100) / 100;
+    const isCorrect = Math.abs(roundedAnswer - currentDiffTask.correct) < 0.01;
+    
+    if (isCorrect) {
+        resultDiv.textContent = `Правильно! Ответ: ${currentDiffTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-green-100 text-green-800';
+        score++;
+    } else {
+        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentDiffTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
+    }
+    
+    resultDiv.classList.remove('hidden');
+    answerInput.disabled = true;
     updateProgress();
 }
 
 function checkEgeAnswer() {
     const alertDiv = document.getElementById('ege-alert');
-    
-    if (answeredDeposit) {
-        alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
-        alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-yellow-600', 'font-medium');
-        return;
-    }
-    
-    const userInput = document.getElementById('ege-answer').value;
-    const sanitizedInput = sanitizeInput(userInput);
-    const userAnswer = validateNumber(sanitizedInput);
+    const answerInput = document.getElementById('ege-answer');
     const resultDiv = document.getElementById('ege-result');
     
-    if (isNaN(userAnswer)) {
-        alertDiv.textContent = 'Пожалуйста, введите корректное число';
+    if (answeredEge) {
+        alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
         alertDiv.classList.remove('hidden');
-        alertDiv.classList.add('text-red-600', 'font-medium');
         return;
-    } else {
-        alertDiv.classList.add('hidden'); // Скрываем сообщение, если ответ корректен
     }
-        
-        totalTasks++;
-        let isCorrect = false;
-        
-        if (typeof currentEgeTask.correct === 'string') {
-            isCorrect = sanitizedInput === currentEgeTask.correct;
-        } else {
-            const userAnswer = validateNumber(sanitizedInput);
-            if (!isNaN(userAnswer)) {
-                isCorrect = Math.abs(userAnswer - currentEgeTask.correct) < 0.01;
-            }
+    
+    const userInput = answerInput.value.trim();
+    
+    // Проверка для текстовых ответов (вариант 1/2 или количество лет)
+    if (typeof currentEgeTask.correct === 'string') {
+        if (userInput !== '1' && userInput !== '2') {
+            alertDiv.textContent = 'Пожалуйста, введите 1 или 2';
+            alertDiv.classList.remove('hidden');
+            return;
         }
         
-        if (isCorrect) {
-            if (typeof currentEgeTask.correct === 'string') {
-                resultDiv.textContent = 'Правильно!';
-            } else {
-                resultDiv.textContent = `Правильно! Ответ: ${currentEgeTask.correct.toLocaleString('ru-RU')} руб.`;
-            }
-            resultDiv.classList.remove('hidden', 'bg-red-100', 'text-red-800');
-            resultDiv.classList.add('bg-green-100', 'text-green-800');
+        answeredEge = true;
+        totalTasks++;
+        
+        if (userInput === currentEgeTask.correct) {
+            resultDiv.textContent = 'Правильно!';
+            resultDiv.className = 'result mt-4 p-3 rounded-lg bg-green-100 text-green-800';
             score++;
         } else {
-            if (typeof currentEgeTask.correct === 'string') {
-                resultDiv.textContent = `Неправильно. Правильный ответ: ${currentEgeTask.correct}`;
-            } else {
-                resultDiv.textContent = `Неправильно. Правильный ответ: ${currentEgeTask.correct.toLocaleString('ru-RU')} руб.`;
-            }
-            resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
-            resultDiv.classList.add('bg-red-100', 'text-red-800');
+            resultDiv.textContent = `Неправильно. Правильный ответ: ${currentEgeTask.correct}`;
+            resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
+        }
+    } 
+    // Проверка для числовых ответов (переплата по кредиту)
+    else {
+        const userAnswer = parseFloat(userInput);
+        
+        if (isNaN(userAnswer)) {
+            alertDiv.textContent = 'Пожалуйста, введите корректное число';
+            alertDiv.classList.remove('hidden');
+            return;
         }
         
-        resultDiv.classList.remove('hidden');
         answeredEge = true;
-        document.getElementById('ege-answer').disabled = true;
-        updateProgress();
+        totalTasks++;
+        
+        const roundedAnswer = Math.round(userAnswer * 100) / 100;
+        const isCorrect = Math.abs(roundedAnswer - currentEgeTask.correct) < 0.01;
+        
+        if (isCorrect) {
+            resultDiv.textContent = `Правильно! Ответ: ${currentEgeTask.correct.toLocaleString('ru-RU')} руб.`;
+            resultDiv.className = 'result mt-4 p-3 rounded-lg bg-green-100 text-green-800';
+            score++;
+        } else {
+            resultDiv.textContent = `Неправильно. Правильный ответ: ${currentEgeTask.correct.toLocaleString('ru-RU')} руб.`;
+            resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
+        }
     }
+    
+    resultDiv.classList.remove('hidden');
+    answerInput.disabled = true;
+    updateProgress();
+}
