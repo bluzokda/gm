@@ -114,4 +114,32 @@ function generateEgeTask() {
         
         currentEgeTask = {
             correct: Math.ceil(t).toString(),
-            question: `Вклад ${formatNumber(principal)} руб. под ${rate}% годовых с ежегодной капитализацией. Через сколько лет сумма
+            question: `Вклад ${formatNumber(principal)} руб. под ${rate}% годовых с ежегодной капитализацией. Через сколько лет сумма превысит ${formatNumber(target)} руб.?`
+        };
+    }
+    
+    document.getElementById('ege-question').textContent = currentEgeTask.question;
+    document.getElementById('ege-answer').value = '';
+    document.getElementById('ege-result').classList.add('hidden');
+    document.getElementById('ege-answer').disabled = false;
+    document.getElementById('ege-alert').classList.add('hidden');
+    answeredEge = false;
+}
+
+// Вспомогательные функции
+function formatNumber(num) {
+    return new Intl.NumberFormat('ru-RU').format(Math.round(num));
+}
+
+function getYearWord(years) {
+    const lastDigit = years % 10;
+    const lastTwoDigits = years % 100;
+    
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 19) return 'лет';
+    if (lastDigit === 1) return 'год';
+    if (lastDigit >= 2 && lastDigit <= 4) return 'года';
+    return 'лет';
+}
+
+// Инициализация первой задачи
+generateDepositTask();
