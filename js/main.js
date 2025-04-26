@@ -36,37 +36,7 @@ function createBackground() {
         bgAnimation.appendChild(circle);
     }
     console.log('Создано анимированных кругов:', bgAnimation.children.length);
-}
-
-        // Случайные параметры
-        const size = Math.random() * 300 + 100;
-        const posX = Math.random() * window.innerWidth;
-        const posY = Math.random() * window.innerHeight;
-        const duration = Math.random() * 30 + 20;
-        const delay = Math.random() * -20;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        
-        // Динамическое направление движения
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 500 + Math.random() * 500;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance;
-        
-        circle.style.cssText = `
-            width: ${size}px;
-            height: ${size}px;
-            left: ${posX}px;
-            top: ${posY}px;
-            background: ${color};
-            animation-duration: ${duration}s;
-            animation-delay: ${delay}s;
-            --tx: ${tx}px;
-            --ty: ${ty}px;
-        `;
-        
-    bgAnimation.appendChild(circle);
-}  
-}     
+} // ← Только ОДНА закрывающая скобка здесь    
         // Случайные параметры
         const size = Math.random() * 300 + 100;
         const posX = Math.random() * window.innerWidth;
