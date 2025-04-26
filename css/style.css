@@ -22,24 +22,13 @@ body {
 .circle {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     animation: float linear infinite;
     filter: blur(20px);
     will-change: transform, opacity;
+    pointer-events: none; /* Чтобы круги не перехватывали клики */
 }
 
-@keyframes float {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--tx), var(--ty)) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-/* Объединённая анимация float */
 @keyframes float {
     0% {
         transform: translate(0, 0) rotate(0deg);
