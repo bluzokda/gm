@@ -1,11 +1,10 @@
-   // Функции проверки ответов с проверкой на повторный ответ
 function checkDepositAnswer() {
     const alertDiv = document.getElementById('deposit-alert');
     const answerInput = document.getElementById('deposit-answer');
     const resultDiv = document.getElementById('deposit-result');
     
     if (answeredDeposit) {
-        alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
+        alertDiv.textContent = "Вы уже ответили! Нажмите 'Новая задача'.";
         alertDiv.classList.remove('hidden');
         return;
     }
@@ -39,13 +38,13 @@ function checkDepositAnswer() {
     updateProgress();
 }
 
-function checkАnnuityAnswer() {
-    const alertDiv = document.getElementById('deposit-alert');
-    const answerInput = document.getElementById('deposit-answer');
-    const resultDiv = document.getElementById('deposit-result');
+function checkAnnuityAnswer() {
+    const alertDiv = document.getElementById('annuity-alert');
+    const answerInput = document.getElementById('annuity-answer');
+    const resultDiv = document.getElementById('annuity-result');
     
-    if (answeredАnnuity) {
-        alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
+    if (answeredAnnuity) {
+        alertDiv.textContent = "Вы уже ответили! Нажмите 'Новая задача'.";
         alertDiv.classList.remove('hidden');
         return;
     }
@@ -59,18 +58,18 @@ function checkАnnuityAnswer() {
         return;
     }
     
-    answeredАnnuity = true;
+    answeredAnnuity = true;
     totalTasks++;
     
     const roundedAnswer = Math.round(userAnswer * 100) / 100;
-    const isCorrect = Math.abs(roundedAnswer - currentАnnuityTask.correct) < 0.01;
+    const isCorrect = Math.abs(roundedAnswer - currentAnnuityTask.correct) < 0.01;
     
     if (isCorrect) {
-        resultDiv.textContent = `Правильно! Ответ: ${currentDepositTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.textContent = `Правильно! Ответ: ${currentAnnuityTask.correct.toLocaleString('ru-RU')} руб.`;
         resultDiv.className = 'result mt-4 p-3 rounded-lg bg-green-100 text-green-800';
         score++;
     } else {
-        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentАnnuityTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentAnnuityTask.correct.toLocaleString('ru-RU')} руб.`;
         resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
     }
     
@@ -80,21 +79,21 @@ function checkАnnuityAnswer() {
 }
 
 function checkDiffAnswer() {
-    const alertDiv = document.getElementById('deposit-alert');
-    const answerInput = document.getElementById('deposit-answer');
-    const resultDiv = document.getElementById('deposit-result');
+    const alertDiv = document.getElementById('diff-alert');
+    const answerInput = document.getElementById('diff-answer');
+    const resultDiv = document.getElementById('diff-result');
     
     if (answeredDiff) {
-        alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
+        alertDiv.textContent = "Вы уже ответили! Нажмите 'Новая задача'.";
         alertDiv.classList.remove('hidden');
         return;
     }
     
     const userInput = answerInput.value;
-    const userAnswer = parseFloat(userInput);
+    const parts = userInput.trim().split(/\s+/);
     
-    if (isNaN(userAnswer)) {
-        alertDiv.textContent = 'Пожалуйста, введите корректное число';
+    if (parts.length !== 2 || isNaN(parts[0]) || isNaN(parts[1])) {
+        alertDiv.textContent = 'Пожалуйста, введите два числа через пробел';
         alertDiv.classList.remove('hidden');
         return;
     }
@@ -102,15 +101,17 @@ function checkDiffAnswer() {
     answeredDiff = true;
     totalTasks++;
     
-    const roundedAnswer = Math.round(userAnswer * 100) / 100;
-    const isCorrect = Math.abs(roundedAnswer - currentDiffTask.correct) < 0.01;
+    const userAnswer1 = parseFloat(parts[0]);
+    const userAnswer2 = parseFloat(parts[1]);
+    const isCorrect = Math.abs(userAnswer1 - currentDiffTask.firstPayment) < 0.01 && 
+                     Math.abs(userAnswer2 - currentDiffTask.lastPayment) < 0.01;
     
     if (isCorrect) {
-        resultDiv.textContent = `Правильно! Ответ: ${currentDiffTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.textContent = `Правильно! Ответ: ${currentDiffTask.firstPayment.toLocaleString('ru-RU')} руб. и ${currentDiffTask.lastPayment.toLocaleString('ru-RU')} руб.`;
         resultDiv.className = 'result mt-4 p-3 rounded-lg bg-green-100 text-green-800';
         score++;
     } else {
-        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentDiffTask.correct.toLocaleString('ru-RU')} руб.`;
+        resultDiv.textContent = `Неправильно. Правильный ответ: ${currentDiffTask.firstPayment.toLocaleString('ru-RU')} руб. и ${currentDiffTask.lastPayment.toLocaleString('ru-RU')} руб.`;
         resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
     }
     
@@ -125,14 +126,13 @@ function checkEgeAnswer() {
     const resultDiv = document.getElementById('ege-result');
     
     if (answeredEge) {
-        alertDiv.textContent = "Вы уже ответили! Нажмите 'Следующая задача'.";
+        alertDiv.textContent = "Вы уже ответили! Нажмите 'Новая задача'.";
         alertDiv.classList.remove('hidden');
         return;
     }
     
     const userInput = answerInput.value.trim();
     
-    // Проверка для текстовых ответов (вариант 1/2 или количество лет)
     if (typeof currentEgeTask.correct === 'string') {
         if (userInput !== '1' && userInput !== '2') {
             alertDiv.textContent = 'Пожалуйста, введите 1 или 2';
@@ -151,9 +151,7 @@ function checkEgeAnswer() {
             resultDiv.textContent = `Неправильно. Правильный ответ: ${currentEgeTask.correct}`;
             resultDiv.className = 'result mt-4 p-3 rounded-lg bg-red-100 text-red-800';
         }
-    } 
-    // Проверка для числовых ответов (переплата по кредиту)
-    else {
+    } else {
         const userAnswer = parseFloat(userInput);
         
         if (isNaN(userAnswer)) {
