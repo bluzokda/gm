@@ -1,11 +1,10 @@
    // Функции проверки ответов с проверкой на повторный ответ
 function checkDepositAnswer() {
-    const resultDiv = document.getElementById('deposit-result');
-    
     if (answeredDeposit) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        const resultDiv = document.getElementById('deposit-result');
+        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
+        resultDiv.classList.remove('hidden');
         return;
     }
     
@@ -42,13 +41,12 @@ function checkDepositAnswer() {
         updateProgress();
     }
 
-    function checkAnnuityAnswer() {
-    const resultDiv = document.getElementById('deposit-result');
-    
-    if (answeredAnnutity) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+function checkAnnuityAnswer() {
+    if (answeredAnnuity) {
+        const resultDiv = document.getElementById('deposit-result');
+        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
+        resultDiv.classList.remove('hidden');
         return;
     }
     
@@ -86,12 +84,11 @@ function checkDepositAnswer() {
     }
 
 function checkDiffAnswer() {
-    const resultDiv = document.getElementById('deposit-result');
-    
     if (answeredDiff) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        const resultDiv = document.getElementById('deposit-result');
+        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
+        resultDiv.classList.remove('hidden');
         return;
     }
     
@@ -132,13 +129,12 @@ function checkDiffAnswer() {
         updateProgress();
     }
 
-function checkEgeAnswe() {
-    const resultDiv = document.getElementById('deposit-result');
-    
+function checkEgeAnswer() {
     if (answeredEge) {
-        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
-        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
-        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        const resultDiv = document.getElementById('deposit-result');
+        resultDiv.innerHTML = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.className = 'result mt-4 p-3 rounded-lg bg-yellow-100 text-yellow-800';
+        resultDiv.classList.remove('hidden');
         return;
     }
     
