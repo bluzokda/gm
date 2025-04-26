@@ -602,9 +602,15 @@
             generateDepositTask();
         });
     </script>
-<link rel="stylesheet" href="css/style.css">
-<script src="js/tasks.js"></script>
-<script src="js/answers.js"></script>
-<script src="js/main.js"></script>
+    <!-- Подключение скриптов в правильном порядке -->
+    <script src="js/tasks.js"></script>
+    <script src="js/answers.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackground();
+            generateDepositTask(); // Загружаем первую задачу
+        });
+    </script>
 </body>
 </html>
