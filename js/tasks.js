@@ -65,6 +65,24 @@ function generateDiffTask() {
     answeredDiff = false;
 }
 
+function generateInvestTask() {
+    const target = Math.floor(Math.random() * 9000000) + 1000000;
+    const rate = Math.floor(Math.random() * 8) + 5;
+    const years = Math.floor(Math.random() * 15) + 5;
+    
+    currentInvestTask = {
+        correct: target / Math.pow(1 + rate / 100, years),
+        question: `Какую сумму вам нужно инвестировать сегодня под ${rate}% годовых, чтобы через ${years} ${getYearWord(years)} получить ${formatNumber(target)} руб.?`
+    };
+    
+    document.getElementById('invest-question').textContent = currentInvestTask.question;
+    document.getElementById('invest-answer').value = '';
+    document.getElementById('invest-result').classList.add('hidden');
+    document.getElementById('invest-answer').disabled = false;
+    document.getElementById('invest-alert').classList.add('hidden');
+    answeredInvest = false;
+}
+
 function generateEgeTask() {
     const taskType = Math.floor(Math.random() * 3) + 1;
     
