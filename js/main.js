@@ -271,8 +271,15 @@ function openTab(tabName) {
     if (tabName === 'ege') generateEgeTask();
 }
 
-// Инициализация при загрузке страницы
+// Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM загружен, запускаем создание фона');
     createBackground();
-    generateDepositTask(); // Стартовая вкладка
+    
+    // Для отладки - проверка видимости фона
+    const bg = document.querySelector('.bg-animation');
+    if (bg) {
+        bg.style.border = '2px solid red'; // Временная рамка для отладки
+        setTimeout(() => { bg.style.border = 'none' }, 3000);
+    }
 });
