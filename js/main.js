@@ -66,7 +66,7 @@ function createBackground() {
         
         bgAnimation.appendChild(circle);
     }
-}        
+    }        
         // Случайные параметры
         const size = Math.random() * 300 + 100;
         const posX = Math.random() * window.innerWidth;
