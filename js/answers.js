@@ -1,9 +1,14 @@
    // Функции проверки ответов с проверкой на повторный ответ
-    function checkDepositAnswer() {
-        if (answeredDeposit) {
-            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
-            return;
-        }
+function checkDepositAnswer() {
+    const resultDiv = document.getElementById('deposit-result');
+    
+    if (answeredDeposit) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+    
         
         const userInput = document.getElementById('deposit-answer').value;
         const sanitizedInput = sanitizeInput(userInput);
@@ -38,10 +43,15 @@
     }
 
     function checkAnnuityAnswer() {
-        if (answeredAnnuity) {
-            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
-            return;
-        }
+    const resultDiv = document.getElementById('deposit-result');
+    
+    if (answeredAnnutity) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+    
         
         const userInput = document.getElementById('annuity-answer').value;
         const sanitizedInput = sanitizeInput(userInput);
@@ -75,11 +85,16 @@
         updateProgress();
     }
 
-    function checkDiffAnswer() {
-        if (answeredDiff) {
-            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
-            return;
-        }
+function checkDiffAnswer() {
+    const resultDiv = document.getElementById('deposit-result');
+    
+    if (answeredDiff) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+    
         
         const userInput = document.getElementById('diff-answer').value;
         const sanitizedInput = sanitizeInput(userInput);
@@ -117,11 +132,16 @@
         updateProgress();
     }
 
-    function checkEgeAnswer() {
-        if (answeredEge) {
-            alert("Вы уже ответили на этот вопрос! Нажмите 'Следующая задача'.");
-            return;
-        }
+function checkEgeAnswe() {
+    const resultDiv = document.getElementById('deposit-result');
+    
+    if (answeredEge) {
+        resultDiv.textContent = 'Вы уже ответили на этот вопрос! Нажмите "Следующая задача"';
+        resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+        resultDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+        return;
+    }
+    
         
         const userInput = document.getElementById('ege-answer').value;
         const sanitizedInput = sanitizeInput(userInput).trim();
