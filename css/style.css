@@ -1,13 +1,22 @@
-body {
-    font-family: 'Roboto', sans-serif;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
+body, html {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
-/* Обновлённые стили для анимированного фона */
+.financial-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
 .bg-animation {
     position: fixed;
     top: 0;
@@ -26,7 +35,7 @@ body {
     animation: float linear infinite;
     filter: blur(20px);
     will-change: transform, opacity;
-    pointer-events: none; /* Чтобы круги не перехватывали клики */
+    pointer-events: none;
 }
 
 @keyframes float {
@@ -40,31 +49,84 @@ body {
     }
 }
 
-/* Сохраняем существующие стили */
-.tab-btn {
+.header-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(255,255,255,0.1) 0%, 
+        rgba(255,255,255,0) 50%, 
+        rgba(255,255,255,0.1) 100%);
+    background-size: 200% 200%;
+    animation: headerShine 8s ease infinite;
+}
+
+@keyframes headerShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animate-title {
+    perspective: 1000px;
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, 
+        #ffffff 0%, 
+        #a7d8ff 50%, 
+        #ffffff 100%);
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: textShine 3s linear infinite;
+    display: inline-block;
+}
+
+@keyframes textShine {
+    to { background-position: 200% center; }
+}
+
+.animate-subtitle {
+    animation: fadeInUp 1.5s ease-out both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.tab-btn {
+    transition: all 0.2s ease;
 }
 
 .tab-btn:hover {
     transform: translateY(-2px);
 }
 
-.result {
-    transition: all 0.3s ease;
-}
-
 .progress-bar {
-    transition: width 0.5s ease;
-}
-
-.floating {
-    animation: floating 3s ease-in-out infinite;
-}
-
-@keyframes floating {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+    transition: width 0.6s ease;
 }
 
 .pulse {
@@ -75,74 +137,6 @@ body {
     0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
     100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
-}
-/* Стили для уведомлений */
-.bg-yellow-100 {
-    background-color: #fef9c3;
-}
-
-.text-yellow-800 {
-    color: #92400e;
-}
-
-.footer-menu-item {
-    padding: 8px 16px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.footer-menu-item:hover {
-    background: #3498db;
-    color: white;
-    transform: translateY(-3px);
-}
-
-.footer-menu-item.active {
-    background: #2980b9;
-    color: white;
-    font-weight: bold;
-}
-
-/* Дополнительные стили для сообщения о повторном ответе */
-.answered-message {
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 10px;
-    font-weight: 500;
-}
-
-/* Стили для сообщений */
-.text-yellow-600 {
-    color: #d97706;
-}
-
-.text-red-600 {
-    color: #dc2626;
-}
-
-.font-medium {
-    font-weight: 500;
-}
-
-/* Оставьте только стили для пунктов меню */
-.footer-menu-item {
-    padding: 8px 16px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.footer-menu-item:hover {
-    background: #3498db;
-    color: white;
-    transform: translateY(-3px);
-}
-
-.footer-menu-item.active {
-    background: #2980b9;
-    color: white;
-    font-weight: bold;
 }
 
 .hidden { display: none; }
